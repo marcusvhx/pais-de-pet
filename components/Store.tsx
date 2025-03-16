@@ -11,11 +11,12 @@ interface iProduct {
   price: number;
 }
 
-export default function Shop({}: {}) {
+export default function Store({}: {}) {
   const itemsImagesUrl: iProduct[] = [
     { image: product1, name: "ração gran plus cão adulto", price: 120 },
     { image: product2, name: "ração gran plus gato adulto", price: 125 },
     { image: product3, name: "ração goldeN cão adulto", price: 130 },
+    // -------
     { image: product1, name: "ração gran plus cão adulto", price: 120 },
     { image: product2, name: "ração gran plus gato adulto", price: 125 },
     { image: product3, name: "ração goldeN cão adulto", price: 130 },
@@ -30,8 +31,8 @@ export default function Shop({}: {}) {
             <div className="relative w-[5.5rem] h-[10rem]">
               <Image
                 src={product.image}
-                alt="imagem"
-                layout="fill"
+                alt={product.name}
+                fill
                 className={`object-cover w-full h-full`}
               />
             </div>

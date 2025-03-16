@@ -1,7 +1,7 @@
 import Header from "@/components/Header";
 import Home from "@/components/Home";
 import Services from "@/components/Services";
-import Shop from "@/components/Shop";
+import Store from "@/components/Store";
 
 export default function SPA() {
   return (
@@ -9,7 +9,7 @@ export default function SPA() {
       <Header />
       <div className="flex flex-col gap-5">
         <Home />
-        <Shop />
+        <Store />
         <Services />
       </div>
     </main>

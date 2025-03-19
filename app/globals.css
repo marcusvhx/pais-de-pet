@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap");
 @import "tailwindcss";
 
 :root {
@@ -8,7 +8,9 @@
 
 @theme inline {
   --color-yellow: #fdee02;
-  --color-orange: #fc9900;
+  --color-tanjerina: #fc9900;
+  --color-carot: #fc6900;
+  --color-cerulean: #349df2;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-fredoka: "Fredoka", "sans-serif";
@@ -23,6 +25,6 @@ body {
 
 /* ==================== custom ==================== */
 
-.scroll-hidden::-webkit-scrollbar{
+.scroll-hidden::-webkit-scrollbar {
   display: none;
 }

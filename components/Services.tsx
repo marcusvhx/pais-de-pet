@@ -8,29 +8,28 @@ export default function Services({}: {}) {
   const servicesList: iServiceCard[] = [
     {
       tittle: "petshop",
-      description: "produtos diversos para o seu animalzinho",
+      description: "produtos diversos para o seu pet",
       image: petshopImage,
-      color: "orange",
+      color: "carot",
     },
     {
       tittle: "veterinário",
-      description:
-        "Profissionais qualificados para o cuidado da saúde dos seus pets",
+      description: "Profissionais qualificados para o cuidado da saúde dos seus pets",
       image: vetImage,
-      color: "orange",
+      color: "cerulean",
     },
     {
       tittle: "banho e tosa",
       description:
         "deixe o seu pet cheiroso e arrumado com a nossa equipe de banho e tosa",
       image: groomingImage,
-      color: "orange",
+      color: "tanjerina",
     },
   ];
   return (
-    <section className="px-2">
+    <section className="">
       <SectoinTittle tittle="serviços" />
-      <div className="flex pt-5 gap-3 overflow-auto scroll-hidden">
+      <div className="flex pt-5 px-2 gap-3 overflow-auto scroll-hidden">
         {servicesList.map((service, idx) => (
           <ServiceCard
             key={`service${idx}`}

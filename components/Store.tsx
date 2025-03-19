@@ -22,9 +22,9 @@ export default function Store({}: {}) {
     { image: product3, name: "ração goldeN cão adulto", price: 130 },
   ];
   return (
-    <section className="px-2">
+    <section className="">
       <SectoinTittle tittle="Produtos" />
-      <div className="flex pt-5 gap-3 overflow-auto scroll-hidden">
+      <div className="flex pt-5 px-2 gap-3 overflow-auto scroll-hidden">
         {itemsImagesUrl.map((product, idx) => (
           <ProductSlot key={`url${idx}`}>
             {/* image holder */}

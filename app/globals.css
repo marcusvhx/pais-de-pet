@@ -14,8 +14,8 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-fredoka: "Fredoka", "sans-serif";
+  --input-max-w: 20rem
 }
-
 body {
   text-transform: capitalize;
   background: var(--background);

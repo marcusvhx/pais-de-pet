@@ -13,7 +13,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`pb-2`}>{children}</body>
+      <body className={``}>{children}</body>
     </html>
   );
 }

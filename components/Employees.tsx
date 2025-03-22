@@ -11,12 +11,12 @@ export default function Employees({}: {}) {
     { image: employee3, name: "Dr. Rafael", profession: "veterinário" },
   ];
   return (
-    <section className="flex flex-col w-full h-fit bg-linear-to-b from-background via-cerulean/60 to-background mt-2">
+    <section className="flex flex-col w-full h-fit bg-linear-to-b from-background via-cerulean/60 to-background">
       <h2 className="font-lg uppercase font-bold text-center mb-5">
         conheça nossos funcionários
       </h2>
 
-      <div className="flex justify-around flex-wrap w-full">
+      <div className="flex gap-2 justify-around flex-wrap w-full">
         {employeesList.map((emp, idx) => (
           <div className="flex flex-col items-center z-1" key={`eployee${idx}`}>
             <div className="h-50 w-32 relative">

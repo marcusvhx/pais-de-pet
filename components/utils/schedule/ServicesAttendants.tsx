@@ -8,19 +8,17 @@ export interface iServiceAttendants {
 }
 
 export default function ServicesAttendants({
-  selectedEmployee,
-  selectedService,
-  getSelectedEnployee,
-  getSelectedService,
+  getData,
   servicesList,
   employeesList,
+  selectedEmployee,
+  selectedService
 }: {
-  selectedService: string;
-  selectedEmployee: string;
-  getSelectedService: (value: string) => void;
-  getSelectedEnployee: (value: string) => void;
   servicesList: string[];
+  selectedService: string;
   employeesList: string[];
+  selectedEmployee: string;
+  getData:  (key: string, value: string) => void;
 }) {
   return (
     <div>
@@ -29,15 +27,18 @@ export default function ServicesAttendants({
         <ListInput
           optionsList={servicesList}
           selectedValue={selectedService}
-          getSelectedOption={getSelectedService}
+          getSelectedOption={getData}
+          name="selectedService"
+
         />
       </div>
       <div>
         <p className="text-white text-lg">atendente</p>
         <ListInput
+          name="selectedEmployee"
           optionsList={employeesList}
           selectedValue={selectedEmployee}
-          getSelectedOption={getSelectedEnployee}
+          getSelectedOption={getData}
         />
       </div>
     </div>

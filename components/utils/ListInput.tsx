@@ -6,10 +6,12 @@ export default function ListInput({
   optionsList,
   selectedValue,
   getSelectedOption,
+  name
 }: {
+  name:string
   optionsList: string[];
   selectedValue: string;
-  getSelectedOption: (option: string) => void;
+  getSelectedOption: (key: string, value: string) => void;
 }) {
   const [isInputOpen, setIsInputOpen] = useState<boolean>(false);
 
@@ -20,7 +22,7 @@ export default function ListInput({
         className="max-w-(--input-max-w) w-[90dvw] h-10 rounded-lg bg-white capitalize focus:outline-hidden pl-2"
       />
 
-      <OptionsList list={optionsList} isOpen={isInputOpen} setValue={getSelectedOption} />
+      <OptionsList list={optionsList} isOpen={isInputOpen} chooseOption={(value:string)=>getSelectedOption(name,value)} />
 
       <div className="z-1 w-full h-full  absolute top-0 left-0 flex justify-end items-center">
         <ChevronDown
@@ -34,11 +36,11 @@ export default function ListInput({
 function OptionsList({
   list,
   isOpen,
-  setValue,
+  chooseOption,
 }: {
   list: string[];
   isOpen: boolean;
-  setValue: (value: string) => void;
+  chooseOption: (value: string) => void;
 }) {
   return (
     <ul
@@ -48,7 +50,7 @@ function OptionsList({
     >
       {list.map((option, idx) => (
         <li
-          onClick={() => setValue(option)}
+          onClick={() => chooseOption(option)}
           key={`option${idx}`}
           className="hover:bg-neutral-400 py-2 px-1 border-b-1 border-b-zinc-200"
         >

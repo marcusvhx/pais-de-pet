@@ -10,6 +10,7 @@ export default function SPA() {
   return (
     <main>
       <Header />
+
       <div className="flex flex-col gap-15">
         <Home />
         <Store />

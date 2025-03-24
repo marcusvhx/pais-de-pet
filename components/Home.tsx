@@ -1,7 +1,7 @@
 export default function Home({}: {}) {
   return (
-    <div className="w-full h-dvw text-center bg-cover bg-[url(../public/png/backgrounds/home-bg.png)] relative">
-      <h2 className="font-extrabold pt-5">
+    <div className="w-full h-dvw text-center text-sm xs:text-base bg-cover bg-[url(../public/png/backgrounds/home-bg.png)] relative">
+      <h2 className="font-extrabold pt-5 ">
         Produtos indispensáveis para os pais de pet
       </h2>
       <p className="font-normal">

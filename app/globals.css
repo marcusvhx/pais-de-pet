@@ -14,7 +14,8 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-fredoka: "Fredoka", "sans-serif";
-  --input-max-w: 20rem
+  --input-max-w: 20rem;
+  --breakpoint-xs: 22rem
 }
 body {
   text-transform: capitalize;
@@ -27,4 +28,8 @@ body {
 
 .scroll-hidden::-webkit-scrollbar {
   display: none;
+}
+
+:root:has(.no-scroll) {
+  overflow: hidden;
 }

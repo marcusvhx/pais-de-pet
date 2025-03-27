@@ -22,29 +22,34 @@ export default function Store({}: {}) {
     { image: product3, name: "ração goldeN cão adulto", price: 130 },
   ];
   return (
-    <section className="w-full h-fit">
+    <section id="store" className=" w-full h-fit">
       <SectoinTittle tittle="Produtos" />
-      <div className="flex pt-5 px-2 gap-3 overflow-auto scroll-hidden">
-        {itemsImagesUrl.map((product, idx) => (
-          <ProductSlot key={`url${idx}`}>
-            {/* image holder */}
-            <div className="relative w-[5.5rem] h-[10rem]">
-              <Image
-                src={product.image}
-                alt={product.name}
-                fill
-                className={`object-cover w-full h-full`}
-              />
-            </div>
-            <p>{product.name}</p>
-            <p>
-              {product.price.toLocaleString("pt-BR", {
-                currency: "BRL",
-                style: "currency",
-              })}
-            </p>
-          </ProductSlot>
-        ))}
+      <div className="w-full flex justify-center">
+        <div className="capitalize flex pt-5 px-2 gap-3 overflow-x-scroll scroll-hidden">
+          {itemsImagesUrl.map((product, idx) => (
+            <ProductSlot key={`url${idx}`}>
+              {/* image holder */}
+              <div className="relative w-20 h-32 2sm:w-24 2sm:h-39">
+                <Image
+                  src={product.image}
+                  alt={product.name}
+                  fill
+                  className={`object-contain w-full h-full`}
+                />
+              </div>
+
+              <div className="w-full h-15 pb-1 flex flex-col justify-between 3xs:h-19">
+                <p className="">{product.name}</p>
+                <p className="justify-self-end">
+                  {product.price.toLocaleString("pt-BR", {
+                    currency: "BRL",
+                    style: "currency",
+                  })}
+                </p>
+              </div>
+            </ProductSlot>
+          ))}
+        </div>
       </div>
     </section>
   );

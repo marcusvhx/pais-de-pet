@@ -1,13 +1,20 @@
 import Image, { StaticImageData } from "next/image";
 
 export interface iServiceCard {
+  id: string;
   image: StaticImageData;
   tittle: string;
   description: string;
   color: "tanjerina" | "cerulean" | "carot";
 }
 
-export default function ServiceCard({ image, color, description, tittle }: iServiceCard) {
+export default function ServiceCard({
+  image,
+  color,
+  description,
+  tittle,
+  id,
+}: iServiceCard) {
   const cardColors = {
     tanjerina: {
       gradientColor: "from-tanjerina",
@@ -23,7 +30,10 @@ export default function ServiceCard({ image, color, description, tittle }: iServ
     },
   };
   return (
-    <div className="relative min-w-[17rem] min-h-40 rounded-lg overflow-hidden">
+    <div
+      id={id}
+      className="carousel-item relative min-w-[69lvw] min-h-[50lvw] 3xs:min-w-85 3xs:min-h-60 rounded-lg overflow-hidden"
+    >
       <div className="absolute w-full h-22 bottom-0 left-0 flex flex-col gap-1.5 z-2 text-white p-1.5">
         <h2
           className={`text-lg font-bold uppercase relative ${cardColors[color].tittleColor}`}

@@ -8,7 +8,7 @@ import Store from "@/components/Store";
 
 export default function SPA() {
   return (
-    <main>
+    <main className="">
       <Header />
 
       <div className="flex flex-col gap-15">

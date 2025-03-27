@@ -4,13 +4,13 @@ import { useState } from "react";
 
 export default function ListInput({
   optionsList,
-  selectedValue,
+  selectedOption,
   getSelectedOption,
-  name
+  name,
 }: {
-  name:string
+  name: string;
   optionsList: string[];
-  selectedValue: string;
+  selectedOption: string;
   getSelectedOption: (key: string, value: string) => void;
 }) {
   const [isInputOpen, setIsInputOpen] = useState<boolean>(false);
@@ -18,11 +18,15 @@ export default function ListInput({
   return (
     <div className="w-fit h-fit relative" onClick={() => setIsInputOpen((old) => !old)}>
       <input
-        defaultValue={selectedValue}
+        defaultValue={selectedOption}
         className="max-w-(--input-max-w) w-[90dvw] h-10 rounded-lg bg-white capitalize focus:outline-hidden pl-2"
       />
 
-      <OptionsList list={optionsList} isOpen={isInputOpen} chooseOption={(value:string)=>getSelectedOption(name,value)} />
+      <OptionsList
+        list={optionsList}
+        isOpen={isInputOpen}
+        chooseOption={(value: string) => getSelectedOption(name, value)}
+      />
 
       <div className="z-1 w-full h-full  absolute top-0 left-0 flex justify-end items-center">
         <ChevronDown

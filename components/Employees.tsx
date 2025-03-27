@@ -11,7 +11,10 @@ export default function Employees({}: {}) {
     { image: employee3, name: "Dr. Rafael", profession: "veterinário" },
   ];
   return (
-    <section className="flex flex-col w-full h-fit bg-linear-to-b from-background via-cerulean/60 to-background">
+    <section
+      id="employees"
+      className="flex flex-col w-full h-fit bg-linear-to-b from-background via-cerulean/60 to-background"
+    >
       <h2 className="font-lg uppercase font-bold text-center mb-5">
         conheça nossos funcionários
       </h2>

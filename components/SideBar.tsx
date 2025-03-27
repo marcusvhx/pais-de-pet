@@ -1,22 +1,41 @@
+import { iBookmark } from "./Header";
+
 export default function SideBar({
   isOpen,
   toggle,
+  bookmarks,
 }: {
   isOpen: boolean;
   toggle: (filter: string, name: string) => void;
+  bookmarks: iBookmark[];
 }) {
   return (
     <div
-      onClick={(e) => toggle("toggle", e.currentTarget.className)}
-      className={` toggle top-0 h-dvh w-dvw flex justify-end transition-all ${
-        isOpen ? "fixed bg-black/20" : " hidden bg-transparent"
+      onClick={(e) => toggle("side-bar-toggle", e.currentTarget.className)}
+      className={`side-bar-toggle h-dvh fixed top-0 right-0 overflow-hidden flex justify-end transition-colors sm:hidden ${
+        isOpen ? "w-dvw bg-black/20 " : "delay-500 w-0"
       }`}
     >
       <div
         className={`${
           isOpen ? "w-60" : "w-0"
         } h-full flex flex-col overflow-hidden transition-all bg-background`}
-      ></div>
+      >
+        {bookmarks.map(({ anchor, name }) => (
+          <HeaderLink key={name} anchor={anchor} name={name} />
+        ))}
+      </div>
     </div>
+  );
+}
+
+function HeaderLink({ anchor, name }: { name: string; anchor: string }) {
+  return (
+    <a
+      className="w-full py-2 border-b border-zinc-400 text-center hover:bg-neutral-200"
+      href={`#${anchor}`}
+    >
+      {name}
+    </a>
   );
 }

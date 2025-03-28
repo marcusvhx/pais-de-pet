@@ -14,7 +14,7 @@ export default function Footer() {
           @marcus.xavier.dev
         </a>
       </p>
-      <div className="w-full text-center">© copyright 2025</div>
+      {/* <div className="w-full text-center">© copyright 2025</div> */}
     </footer>
   );
 }

@@ -2,7 +2,7 @@ export default function Home({}: {}) {
   return (
     <section
       id="home"
-      className="w-full h-dvw 3xs:h-[90dvh] text-center text-sm xs:text-base 3xs:text-lg bg-cover bg-top bg-[url(../public/png/backgrounds/home-bg.png)] relative"
+      className="w-full h-dvw 3xs:h-[90dvh] text-center text-sm xs:text-base 3xs:text-lg bg-cover bg-top bg-[url(/png/backgrounds/home-bg.png)] relative"
     >
       <h2 className="font-extrabold sm:text-lg md:text-2xl pt-5 capitalize">
         Produtos indispensáveis para os pais de pet

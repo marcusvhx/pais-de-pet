@@ -38,7 +38,7 @@ export default function Employees({}: {}) {
         ))}
       </div>
       <div
-        className={`h-50 w-full absolute -bottom-40 2xs:-bottom-45 bg-cover min-[490px]:bg-contain sm:h-54 sm:-bottom-54 bg-top bg-repeat bg-[url(../public/png/backgrounds/paws-bg.png)]`}
+        className={`h-50 w-full absolute -bottom-40 2xs:-bottom-45 bg-cover min-[490px]:bg-contain sm:h-54 sm:-bottom-54 bg-top bg-repeat bg-[url(/png/backgrounds/paws-bg.png)]`}
       ></div>
     </section>
   );

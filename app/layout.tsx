@@ -4,6 +4,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Pais De Pet",
   description: "Petshop em Candeias",
+  icons: "/favicon/logo-pais-de-pet.ico",
 };
 
 export default function RootLayout({

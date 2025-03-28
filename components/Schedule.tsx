@@ -7,8 +7,9 @@ import Image from "next/image";
 import formBg from "@/public/png/backgrounds/form-bg.png";
 // lista de funcionarios e serviços
 const servicesEmployeesList = [
-  { service: "banho e tosa", employees: ["michele", "nathalia"] },
-  { service: "consulta vetérinária", employees: ["dr. rafael"] },
+  { service: "banho e tosa", employees: ["Michele", "Nathalia"] },
+  { service: "consulta vetérinária", employees: ["dr. Rafael"] },
+  { service: "vacinação", employees: ["dr. Rafael"] },
 ];
 
 const servicesList = servicesEmployeesList.map((obj) => obj.service); // lista de serviços

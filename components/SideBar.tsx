@@ -20,7 +20,7 @@ export default function SideBar({
       <div
         className={`${
           isOpen ? "w-60" : "w-0"
-        } h-full p-2 text-lg font-semibold uppercase flex flex-col overflow-hidden transition-all bg-background rounded-l-lg`}
+        } h-full p-2 text-lg font-semibold capitalize flex flex-col overflow-hidden transition-all bg-background rounded-l-lg`}
       >
         <div className="flex justify-end h-10 w-full">
           <X className="w-10 h-full" />

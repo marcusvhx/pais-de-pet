@@ -80,7 +80,7 @@ export default function Schedule({}: {}) {
         <Image src={formBg} alt="" className="object-cover" />
       </div>
       <div className="capitalize w-full flex flex-col items-center gap-2 md:gap-4">
-        <p className="text-xl font-bold text-white mt-2">hora do agendamento</p>
+        <p className="text-xl font-bold text-white mt-2">faça o seu agendamento</p>
         {inputsDataList.map((inp, idx) => (
           <div className="w-fit" key={`input${idx}`}>
             <TextInput

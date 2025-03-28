@@ -1,3 +1,4 @@
+import { X } from "lucide-react";
 import { iBookmark } from "./Header";
 
 export default function SideBar({
@@ -12,15 +13,18 @@ export default function SideBar({
   return (
     <div
       onClick={(e) => toggle("side-bar-toggle", e.currentTarget.className)}
-      className={`side-bar-toggle h-dvh fixed top-0 right-0 overflow-hidden flex justify-end transition-colors sm:hidden ${
+      className={`side-bar-toggle h-dvh fixed md:hidden top-0 right-0 overflow-hidden flex justify-end transition-colors ${
         isOpen ? "w-dvw bg-black/20 " : "delay-500 w-0"
       }`}
     >
       <div
         className={`${
           isOpen ? "w-60" : "w-0"
-        } h-full flex flex-col overflow-hidden transition-all bg-background`}
+        } h-full p-2 text-lg font-semibold uppercase flex flex-col overflow-hidden transition-all bg-background rounded-l-lg`}
       >
+        <div className="flex justify-end h-10 w-full">
+          <X className="w-10 h-full" />
+        </div>
         {bookmarks.map(({ anchor, name }) => (
           <HeaderLink key={name} anchor={anchor} name={name} />
         ))}

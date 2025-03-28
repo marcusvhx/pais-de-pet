@@ -1,11 +1,8 @@
-"use client";
 import SectoinTittle from "./utils/SectionTittle";
 import ServiceCard, { iServiceCard } from "./utils/services/ServiceCard";
 import vetImage from "@/public/png/services/vet-image.png";
 import petshopImage from "@/public/png/services/petshop-image.png";
 import groomingImage from "@/public/png/services/grooming-image.png";
-import { ChevronLeftCircleIcon, ChevronRightCircleIcon } from "lucide-react";
-import { useState } from "react";
 
 export default function Services({}: {}) {
   const servicesList: iServiceCard[] = [
@@ -32,10 +29,24 @@ export default function Services({}: {}) {
       color: "tanjerina",
     },
   ];
+  // sistema de setas, percebi q isso é desnecessario
+  // const servicesListLastIndex = servicesList.length - 1;
+  // const [currentService, setCurrentService] = useState(0);
+  // const next = () => {
+  //   currentService == servicesListLastIndex
+  //     ? setCurrentService(() => 0)
+  //     : setCurrentService((old) => old + 1);
+  // };
+  // const prev = () => {
+  //   currentService == 0
+  //     ? setCurrentService(() => servicesListLastIndex)
+  //     : setCurrentService((old) => old - 1);
+  // };
+
   return (
-    <section className="flex flex-col gap-2" id="services">
+    <section className="py-4 flex flex-col gap-x-10" id="services">
       <SectoinTittle tittle="serviços" />
-      <div className="carousel carousel-center self-center w-full pt-5 px-2 gap-2">
+      <div className="w-full gap-2 md:gap-5 flex sm:justify-around md:justify-center pt-5 px-2 overflow-x-scroll snap-mandatory snap-x snap scroll-smooth scroll-hidden">
         {servicesList.map((service, idx) => (
           <ServiceCard
             id={service.id}
@@ -47,10 +58,23 @@ export default function Services({}: {}) {
           />
         ))}
       </div>
-      <div className="flex justify-around w-full">
-        <ChevronLeftCircleIcon className="z-2 w-10 h-10" />
-        <ChevronRightCircleIcon className="z-2 w-10 h-10" />
-      </div>
+      {/* <div className="hidden md:flex justify-around w-full">
+        <a
+          href={`#${servicesList[currentService].id}`}
+          onClick={prev}
+          className="w-fit h-fit"
+        >
+          <ChevronLeftCircleIcon className="z-2 w-10 h-10" />
+        </a>
+
+        <a
+          href={`#${servicesList[currentService].id}`}
+          onClick={next}
+          className="w-fit h-fit"
+        >
+          <ChevronRightCircleIcon className="z-2 w-10 h-10" />
+        </a>
+      </div> */}
     </section>
   );
 }

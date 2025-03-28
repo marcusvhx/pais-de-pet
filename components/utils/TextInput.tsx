@@ -12,12 +12,13 @@ export default function TextInput({
 }) {
   return (
     <>
-      <p className="text-white text-lg">{tittle}</p>
+      <p className="text-white md:text-lg">{tittle}</p>
       <input
+        required
         placeholder={placeholde}
         name={name}
         onChange={(e) => getValue(e.target.name, e.target.value)}
-        className="max-w-(--input-max-w) w-[90dvw] h-10 placeholder:capitalize rounded-lg bg-white focus:outline-hidden pl-2"
+        className="max-w-95 w-[90dvw] h-10 placeholder:capitalize rounded-lg bg-white focus:outline-hidden pl-2"
       />
     </>
   );

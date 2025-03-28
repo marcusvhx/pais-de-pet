@@ -3,9 +3,9 @@ import aboutBg from "@/public/png/backgrounds/about-us-bg.png";
 
 export default function AboutUs({}: {}) {
   return (
-    <section id="about-us" className="flex justify-between relative">
-      <div className=" text-sm/4 2xs:text-base/4 w-[60dvw] ml-2">
-        <h2 className="text-xl font-bold uppercase my-2">sobre nós</h2>
+    <section id="about-us" className="grid grid-cols-[auto_40dvw] sm:h-hvh sm:mt-10">
+      <div className=" text-sm/5 2xs:text-base/5 md:text-lg/6 w-full sm:w-6/7 ml-2 2md:pl-20 sm:place-self-center ">
+        <h2 className="text-xl md:text-2xl font-bold uppercase my-2">sobre nós</h2>
 
         <p className="normal-case">
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officia sequi quia
@@ -17,8 +17,8 @@ export default function AboutUs({}: {}) {
           quibusdam sed voluptatum rerum laudantium dolores sint vel.
         </p>
       </div>
-      <div className="h-[16rem] w-[40dvw] relative 3xs:w-[187px] right-0">
-        <Image alt="" src={aboutBg} fill className="object-contain " />
+      <div className="h-[16rem] sm:h-full w-full sm:w-full self-center relative">
+        <Image alt="" src={aboutBg} fill className="object-contain object-right" />
       </div>
     </section>
   );

@@ -29,7 +29,7 @@ export default function Store({}: {}) {
           {itemsImagesUrl.map((product, idx) => (
             <ProductSlot key={`url${idx}`}>
               {/* image holder */}
-              <div className="relative w-20 h-32 2sm:w-24 2sm:h-39">
+              <div className="relative w-20 h-32 ">
                 <Image
                   src={product.image}
                   alt={product.name}
@@ -38,7 +38,7 @@ export default function Store({}: {}) {
                 />
               </div>
 
-              <div className="w-full h-15 pb-1 flex flex-col justify-between 3xs:h-19">
+              <div className="w-full h-15 pb-1 flex flex-col justify-between">
                 <p className="">{product.name}</p>
                 <p className="justify-self-end">
                   {product.price.toLocaleString("pt-BR", {

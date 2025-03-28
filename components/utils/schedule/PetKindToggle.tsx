@@ -1,7 +1,11 @@
 "use client";
 import { useState } from "react";
 
-export default function PetKindToggle({}: {}) {
+export default function PetKindToggle({
+  getData,
+}: {
+  getData: (key: string, value: string) => void;
+}) {
   const [selectedOption, setSelectedOption] = useState<string>();
   const getSelectedOption = (option: string) => {
     setSelectedOption(option);
@@ -15,8 +19,11 @@ export default function PetKindToggle({}: {}) {
     <div className="flex gap-3 w-fit h-fit">
       {optionsList.map((option, idx) => (
         <div
-          onClick={() => getSelectedOption(option.name)}
-          className={`${option.color} relative rounded-full text-white text-lg w-26 text-center py-1`}
+          onClick={() => {
+            getSelectedOption(option.name);
+            getData("petKind", option.name);
+          }}
+          className={`${option.color} relative rounded-full text-white text-lg  grid place-items-center w-26 py-1 cursor-pointer`}
           key={`toggleOption${idx}`}
         >
           {option.name}

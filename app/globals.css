@@ -1,6 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap");
 @import "tailwindcss";
-@plugin "daisyui";
 
 :root {
   --background: #fff8ea;
@@ -15,11 +14,14 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-fredoka: "Fredoka", "sans-serif";
-  --input-max-w: 20rem;
   --breakpoint-xs: 352px;
   --breakpoint-2xs: 375px;
   --breakpoint-3xs: 425px;
   --breakpoint-2sm: 700px;
+  --breakpoint-2md: 990px;
+  --spacing-hvh: calc(100dvh - 64px);
+
+  --spacing-input-max-w: 22rem;
 }
 body {
   background: var(--background);
@@ -27,7 +29,6 @@ body {
   font-family: var(--font-fredoka);
 }
 /* ==================== custom ==================== */
-
 .scroll-hidden::-webkit-scrollbar {
   display: none;
 }

@@ -30,9 +30,10 @@ export default function ServiceCard({
     },
   };
   return (
-    <div
+    <a
+      href="#schedule"
       id={id}
-      className="carousel-item relative min-w-[69lvw] min-h-[50lvw] 3xs:min-w-85 3xs:min-h-60 rounded-lg overflow-hidden"
+      className="box-content snap-center relative min-w-55 min-h-40 md:min-w-62 md:min-h-45 rounded-lg overflow-hidden"
     >
       <div className="absolute w-full h-22 bottom-0 left-0 flex flex-col gap-1.5 z-2 text-white p-1.5">
         <h2
@@ -51,6 +52,6 @@ export default function ServiceCard({
       <div
         className={`absolute bottom-0 left-0 w-full h-2/5 bg-linear-to-t ${cardColors[color].gradientColor} to-transparent`}
       />
-    </div>
+    </a>
   );
 }

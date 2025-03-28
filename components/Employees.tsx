@@ -13,31 +13,33 @@ export default function Employees({}: {}) {
   return (
     <section
       id="employees"
-      className="flex flex-col w-full h-fit bg-linear-to-b from-background via-cerulean/60 to-background"
+      className="relative pt-8 mb-28 3xs:mb-34 3xs:pt-3 flex flex-col w-full h-fit bg-linear-to-b from-background via-cerulean/60 to-background"
     >
-      <h2 className="font-lg uppercase font-bold text-center mb-5">
+      <h2 className="text-lg sm:text-xl uppercase font-bold text-center mb-5">
         conheça nossos funcionários
       </h2>
 
-      <div className="flex gap-2 justify-around flex-wrap w-full">
+      <div className="flex gap-2 justify-around 2sm:justify-center 2sm:gap-12 flex-wrap w-full">
         {employeesList.map((emp, idx) => (
-          <div className="flex flex-col items-center z-1" key={`eployee${idx}`}>
-            <div className="h-50 w-32 relative">
+          <div className=" flex flex-col items-center z-1" key={`eployee${idx}`}>
+            <div className="h-50 w-31 3xs:h-66 3xs:w-40 md:h-72 md:w-44 2md:h-90 2md:w-55 relative  ">
               <Image
                 src={emp.image}
                 alt={emp.name}
                 fill
-                className="object-cover rounded-b-md"
+                className="object-contain object-top rounded-b-md"
               />
             </div>
-            <h2 className="font-bold mt-1">{emp.name}</h2>
-            <p className="-mt-1">{emp.profession}</p>
+            <div className="w-fit h-fit sm: bg-white/40 p-1 rounded-3xl sm:text-lg/5 capitalize text-center">
+              <h2 className="font-bold">{emp.name}</h2>
+              <p className="">{emp.profession}</p>
+            </div>
           </div>
         ))}
       </div>
-      <div className="h-50 -mt-10 relative">
-        <Image src={paws} alt="" fill className="object-cover" />
-      </div>
+      <div
+        className={`h-50 w-full absolute -bottom-40 2xs:-bottom-45 bg-cover min-[490px]:bg-contain sm:h-54 sm:-bottom-54 bg-top bg-repeat bg-[url(../public/png/backgrounds/paws-bg.png)]`}
+      ></div>
     </section>
   );
 }

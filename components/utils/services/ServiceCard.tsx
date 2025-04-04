@@ -1,11 +1,12 @@
 import Image, { StaticImageData } from "next/image";
 
 export interface iServiceCard {
-  id: string;
+  id: number;
   image: StaticImageData;
   tittle: string;
   description: string;
   color: "tanjerina" | "cerulean" | "carot";
+  className?: string;
 }
 
 export default function ServiceCard({
@@ -13,7 +14,7 @@ export default function ServiceCard({
   color,
   description,
   tittle,
-  id,
+  className,
 }: iServiceCard) {
   const cardColors = {
     tanjerina: {
@@ -32,14 +33,13 @@ export default function ServiceCard({
   return (
     <a
       href="#schedule"
-      id={id}
-      className="box-content snap-center relative min-w-55 min-h-40 md:min-w-62 md:min-h-45 rounded-lg overflow-hidden"
+      className={`box-content min-w-65 min-h-50 md:min-w-62 md:min-h-45 rounded-lg overflow-hidden ${className}`}
     >
       <div className="absolute w-full h-22 bottom-0 left-0 flex flex-col gap-1.5 z-2 text-white p-1.5">
         <h2
           className={`text-lg font-bold uppercase relative ${cardColors[color].tittleColor}`}
         >
-          <p className="text-lg font-bold uppercase text-white absolute top-1.5">
+          <p className="text-lg font-bold uppercase text-white absolute top-0.5">
             {tittle}
           </p>
           {tittle}

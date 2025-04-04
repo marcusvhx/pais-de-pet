@@ -13,7 +13,7 @@ export default function SideBar({
   return (
     <div
       onClick={(e) => toggle("side-bar-toggle", e.currentTarget.className)}
-      className={`side-bar-toggle h-dvh fixed md:hidden top-0 right-0 overflow-hidden flex justify-end transition-colors z-10 ${
+      className={`side-bar-toggle h-dvh fixed md:hidden top-0 right-0 overflow-hidden flex justify-end transition-colors ${
         isOpen ? "w-dvw bg-black/20 " : "delay-500 w-0"
       }`}
     >

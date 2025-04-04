@@ -29,7 +29,7 @@ export default function Header({}: {}) {
   };
 
   return (
-    <header className="px-2 py-2 sticky top-0 left-0 z-3 w-full h-16 flex items-center justify-between gap-2 bg-gradient-to-tl from-yellow to-tanjerina">
+    <header className="px-2 py-2 sticky top-0 left-0 z-10 w-full h-16 flex items-center justify-between gap-2 bg-gradient-to-tl from-yellow to-tanjerina">
       <a href="#home" className="relative h-10 w-25 ">
         <Image alt="logo pais de pet" src={logo} fill className="object-contain" />
       </a>

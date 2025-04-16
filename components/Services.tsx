@@ -43,8 +43,13 @@ export default function Services({}: {}) {
       id: 2,
       title: "petshop",
       description: "produtos diversos para o seu pet",
-      detailedDescription: "tedtesifsnf",
-      subservices: [""],
+      detailedDescription:
+        "Nosso petshop é muito mais do que uma loja — é uma extensão do nosso compromisso com o bem-estar e a qualidade de vida dos animais. Selecionamos cuidadosamente cada produto pensando na saúde, conforto e felicidade do seu pet, além da praticidade para você, tutor. Aqui você pode encontrar:",
+      subservices: [
+        "✔ Produtos para cuidados diários",
+        "✔ Brinquedos e acessórios",
+        "✔ Linha de saúde e bem-estar",
+      ],
       image: petshopImage,
       color: "carot",
     },

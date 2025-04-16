@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { CookiesProvider } from "next-client-cookies/server";
 
 export const metadata: Metadata = {
   title: "Pais De Pet",
@@ -13,8 +14,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html className="scroll-pt-16 scroll-smooth scroll-hidden" lang="pt-BR">
-      <body className={``}>{children}</body>
-    </html>
+    <CookiesProvider>
+      <html className="scroll-pt-16 scroll-smooth scroll-hidden" lang="pt-BR">
+        <body className={``}>{children}</body>
+      </html>
+    </CookiesProvider>
   );
 }

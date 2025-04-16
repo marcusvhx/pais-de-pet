@@ -22,7 +22,29 @@
   --spacing-hvh: calc(100dvh - 64px);
 
   --spacing-input-max-w: 22rem;
+
+  --animate-intro-opacity: intro-opacity 1s ease-in-out;
+  --animate-intro-to-l: intro-to-l .3s ease-in-out;
 }
+
+@keyframes intro-opacity {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes intro-to-l {
+  0%{
+    transform: translateX(100%);
+  }
+  100%{
+    transform: translateX(0);
+  }
+}
+
 body {
   background: var(--background);
   color: var(--foreground);

@@ -45,15 +45,17 @@ export default function CardsContainer({
 
   return (
     <div className="flex flex-col items-center justify-center w-full h-full">
-      <div className="flex w-full h-55 overflow-hiddeen  relative">
+      <div className="flex w-full h-55 overflow-hiddeen relative">
         {cardsData.map((card) => (
           <ServiceCard
-            key={`card-${card.tittle}`}
+            key={`card-${card.title}`}
             className={`absolute transition-all transition-discrete duration-300 top-1/2 -translate-y-1/2
-                  ${positionHandler(card.id)}`}
+            ${positionHandler(card.id)}`}
             id={card.id}
-            tittle={card.tittle}
+            title={card.title}
             description={card.description}
+            detailedDescriotion={card.detailedDescriotion}
+            subservices={card.subservices}
             image={card.image}
             color={card.color}
           />

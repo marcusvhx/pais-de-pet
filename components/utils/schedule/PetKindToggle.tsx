@@ -12,8 +12,8 @@ export default function PetKindToggle({
   };
 
   const optionsList = [
-    { name: "gato", color: "bg-red-500" },
-    { name: "cachorro", color: "bg-orange-500" },
+    { name: "gato", color: "bg-red-400" },
+    { name: "cachorro", color: "bg-orange-400" },
   ];
   return (
     <div className="flex gap-3 w-fit h-fit">
@@ -23,7 +23,7 @@ export default function PetKindToggle({
             getSelectedOption(option.name);
             getData("petKind", option.name);
           }}
-          className={`${option.color} relative rounded-full text-white text-lg  grid place-items-center w-26 py-1 cursor-pointer`}
+          className={`${option.color} capitalize relative rounded-full text-white text-lg  grid place-items-center w-26 py-1 cursor-pointer`}
           key={`toggleOption${idx}`}
         >
           {option.name}

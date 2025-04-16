@@ -12,7 +12,7 @@ export default function TextInput({
 }) {
   return (
     <>
-      <p className="text-white md:text-lg">{tittle}</p>
+      <p className="first-letter:uppercase text-white md:text-lg">{tittle}</p>
       <input
         required
         placeholder={placeholde}

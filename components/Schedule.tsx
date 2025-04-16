@@ -80,8 +80,10 @@ export default function Schedule({}: {}) {
       <div className="hidden sm:block relative w-full h-fit ">
         <Image src={formBg} alt="" className="object-cover" />
       </div>
-      <div className="capitalize w-full flex flex-col items-center gap-2 md:gap-4">
-        <p className="text-xl font-bold text-white mt-2">faça o seu agendamento</p>
+      <div className=" w-full flex flex-col items-center gap-2 md:gap-4">
+        <p className="first-letter:uppercase text-xl font-semibold text-white mt-2">
+          faça o seu agendamento
+        </p>
         {inputsDataList.map((inp, idx) => (
           <div className="w-fit" key={`input${idx}`}>
             <TextInput
@@ -95,7 +97,9 @@ export default function Schedule({}: {}) {
         <div className="grid min-[410px]:grid-cols-2 gap-y-2 gap-x-1 w-[90dvw] max-w-95 h-fit">
           {inputListData.map((data, idx) => (
             <div key={`selectInput${idx}`}>
-              <p className="text-white md:text-lg">{data.tittle}</p>
+              <p className="first-letter:uppercase text-white md:text-lg">
+                {data.tittle}
+              </p>
               <ListInput
                 name={data.name}
                 optionsList={data.optionsList}

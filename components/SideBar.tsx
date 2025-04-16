@@ -1,5 +1,6 @@
 import { X } from "lucide-react";
 import { iBookmark } from "./Header";
+import Wrapper from "./utils/Wrapper";
 
 export default function SideBar({
   isOpen,
@@ -7,16 +8,11 @@ export default function SideBar({
   bookmarks,
 }: {
   isOpen: boolean;
-  toggle: (filter: string, name: string) => void;
+  toggle: () => void;
   bookmarks: iBookmark[];
 }) {
   return (
-    <div
-      onClick={(e) => toggle("side-bar-toggle", e.currentTarget.className)}
-      className={`side-bar-toggle h-dvh fixed md:hidden top-0 right-0 overflow-hidden flex justify-end transition-colors ${
-        isOpen ? "w-dvw bg-black/20 " : "delay-500 w-0"
-      }`}
-    >
+    <Wrapper isOpen={isOpen} toggle={toggle} className="flex justify-end">
       <div
         className={`${
           isOpen ? "w-60" : "w-0"
@@ -29,7 +25,7 @@ export default function SideBar({
           <HeaderLink key={name} anchor={anchor} name={name} />
         ))}
       </div>
-    </div>
+    </Wrapper>
   );
 }
 

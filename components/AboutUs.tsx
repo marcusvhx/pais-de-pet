@@ -1,25 +1,32 @@
-import Image from "next/image";
-import aboutBg from "@/public/png/backgrounds/about-us-bg.png";
+import { cookies } from "next/headers";
 
-export default function AboutUs({}: {}) {
+export default async function AboutUs({}: {}) {
+  const pageCooies = await cookies();
+  const name = pageCooies.get("username")?.value;
   return (
-    <section id="about-us" className="grid grid-cols-[auto_40dvw] sm:h-hvh sm:mt-10">
-      <div className=" text-sm/5 2xs:text-base/5 md:text-lg/6 w-full sm:w-6/7 ml-2 2md:pl-20 sm:place-self-center ">
-        <h2 className="text-xl md:text-2xl font-bold uppercase my-2">sobre nós</h2>
+    <section id="about-us" className="grid lg:grid-cols-[auto_40dvw] sm:h-hvh sm:mt-10">
+      <div className=" text-base/5 md:text-lg/6 w-full pl-2 2md:pl-20 sm:place-self-center ">
+        <h2 className="text-xl md:text-2xl font-semibold ">
+          Olá, {name || "Bem vindo a Pais de Pet"}
+        </h2>
+        <br />
 
-        <p className="normal-case">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officia sequi quia
-          voluptates, quod ab ut vitae dolorum, quisquam fugiat eveniet veritatis pariatur
-          nisi accusantium est perspiciatis eaque. Nulla, provident assumenda?
+        <p className="">
+          A País de Pet é um centro de cuidados completos para animais de estimação,
+          criado com um propósito claro: promover saúde, bem-estar e qualidade de vida
+          para os pets e tranquilidade para os seus tutores.
           <br />
           <br />
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nemo, quasi sequi
-          quibusdam sed voluptatum rerum laudantium dolores sint vel.
+          Nascemos da paixão pelos animais e da vontade de oferecer um atendimento mais
+          humano, acolhedor e focado na prevenção de doenças, indo além do tratamento
+          pontual. Aqui, acreditamos que cuidar bem é agir antes que o problema apareça –
+          por isso, nosso serviço veterinário tem como base o acompanhamento contínuo, com
+          foco em orientação, exames preventivos e diagnósticos precoces.
         </p>
       </div>
-      <div className="h-[16rem] sm:h-full w-full sm:w-full self-center relative">
+      {/* <div className="h-[16rem] sm:h-full w-full sm:w-full self-center relative">
         <Image alt="" src={aboutBg} fill className="object-contain object-right" />
-      </div>
+      </div> */}
     </section>
   );
 }

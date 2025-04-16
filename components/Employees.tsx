@@ -30,7 +30,7 @@ export default function Employees({}: {}) {
                 className="object-contain object-top rounded-b-md"
               />
             </div>
-            <div className="w-fit h-fit sm: bg-white/40 p-1 rounded-3xl sm:text-lg/5 capitalize text-center">
+            <div className="w-fit h-fit sm: p-1 rounded-3xl sm:text-lg/5 capitalize text-center">
               <h2 className="font-bold">{emp.name}</h2>
               <p className="">{emp.profession}</p>
             </div>

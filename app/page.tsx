@@ -5,7 +5,6 @@ import Header from "@/components/Header";
 import Home from "@/components/Home";
 import Schedule from "@/components/Schedule";
 import Services from "@/components/Services";
-import Store from "@/components/Store";
 
 export default function SPA() {
   return (
@@ -14,10 +13,10 @@ export default function SPA() {
 
       <div className="flex flex-col gap-18">
         <Home />
-        <Store />
+        {/* <Store /> */}
+        <AboutUs />
         <Services />
         <Employees />
-        <AboutUs />
         <Schedule />
       </div>
       <Footer />

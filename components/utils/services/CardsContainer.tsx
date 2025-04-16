@@ -33,11 +33,11 @@ export default function CardsContainer({
   const positionHandler = (reference: number) => {
     switch (reference) {
       case 0:
-        return "drop-shadow-xl/50 left-1/2 -translate-x-1/2 z-3";
+        return "drop-shadow-xl/50 -top-2 left-1/2 -translate-x-1/2 z-3";
       case 1:
-        return "blur-xs opacity-60 z-2 left-[calc(50%+(220px-50px))] -translate-x-1/2";
+        return "blur-xs opacity-60 z-2 top-1/2 left-[calc(50%+(220px-50px))] -translate-1/2";
       case lastIndex:
-        return "blur-xs opacity-60 z-2 left-[calc(50%-(220px-50px))] -translate-x-1/2";
+        return "blur-xs opacity-60 z-2 top-1/2 left-[calc(50%-(220px-50px))] -translate-1/2";
       default:
         return "opacity-0 z-1 left-[calc(50%+(220px-50px))] -translate-x-1/2";
     }
@@ -49,12 +49,12 @@ export default function CardsContainer({
         {cardsData.map((card) => (
           <ServiceCard
             key={`card-${card.title}`}
-            className={`absolute transition-all transition-discrete duration-300 top-1/2 -translate-y-1/2
+            className={`absolute transition-all transition-discrete duration-300
             ${positionHandler(card.id)}`}
             id={card.id}
             title={card.title}
             description={card.description}
-            detailedDescriotion={card.detailedDescriotion}
+            detailedDescription={card.detailedDescription}
             subservices={card.subservices}
             image={card.image}
             color={card.color}

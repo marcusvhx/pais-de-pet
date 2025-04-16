@@ -4,35 +4,32 @@ import vetImage from "@/public/png/services/vet-image.png";
 import petshopImage from "@/public/png/services/petshop-image.png";
 import groomingImage from "@/public/png/services/grooming-image.png";
 import CardsContainer from "./utils/services/CardsContainer";
-import GroomingModal from "./utils/services/modals/GroomingModal";
 
 export default function Services({}: {}) {
   const servicesList: iServiceCard[] = [
     {
       id: 0,
-      title: "petshop",
-      description: "produtos diversos para o seu pet",
-      detailedDescriotion: "",
-      subservices: [""],
-      image: petshopImage,
-      color: "carot",
-    },
-    {
-      id: 1,
       title: "veterinário",
       description: "Profissionais qualificados para o cuidado da saúde dos seus pets",
-      detailedDescriotion: "",
-      subservices: [""],
+      detailedDescription:
+        "O serviço veterinário é centrado no cuidado completo e contínuo, com foco na prevenção de doenças e no acompanhamento de todas as fases da vida do seu pet. Queremos construir uma vida mais saudável e feliz para quem você ama. E pra isso nós oferecemos:",
+      subservices: [
+        "✔ Check-ups regulares",
+        "✔ Vacinação em dia",
+        "✔ Exames laboratoriais",
+        "✔ Acompanhamento personalizado",
+        "✔ Orientação contínua",
+      ],
       image: vetImage,
       color: "cerulean",
     },
     {
-      id: 2,
+      id: 1,
       title: "banho e tosa",
       description:
         "deixe o seu pet cheiroso e arrumado com a nossa equipe de banho e tosa",
-      detailedDescriotion:
-        "O banho e tosa vão muito além da estética, são essenciais para a saúde e o bem-estar do seu pet. Nosso serviço é realizado por profissionais experientes especializados em",
+      detailedDescription:
+        "O banho e tosa vão muito além da estética, são essenciais para a saúde e o bem-estar do seu pet. Nosso serviço é realizado por profissionais experientes especializados em:",
       subservices: [
         "✔ Banho Terapêutico",
         "✔ Tosa Higiênica e Estilizada",
@@ -41,6 +38,15 @@ export default function Services({}: {}) {
 
       image: groomingImage,
       color: "tanjerina",
+    },
+    {
+      id: 2,
+      title: "petshop",
+      description: "produtos diversos para o seu pet",
+      detailedDescription: "tedtesifsnf",
+      subservices: [""],
+      image: petshopImage,
+      color: "carot",
     },
   ];
   return (

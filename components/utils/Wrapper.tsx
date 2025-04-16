@@ -14,8 +14,8 @@ export default function Wrapper({
   return (
     <div
       onClick={toggle}
-      className={`transition-discrete transition-colors h-dvh fixed md:hidden top-0 right-0 z-10 overflow-hidden ${
-        isOpen ? "w-dvw bg-black/20 " : "bg-transparent w-0"
+      className={`transition-discrete transition-all bg-black/20 fixed h-dvh w-dvw md:hidden top-1/2 left-1/2 -translate-1/2 z-10 overflow-hidden ${
+        !isOpen && "invisible"
       } ${className}`}
     >
       {children}

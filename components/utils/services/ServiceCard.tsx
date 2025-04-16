@@ -1,6 +1,6 @@
 "use client";
 import Image, { StaticImageData } from "next/image";
-import GroomingModal from "./modals/GroomingModal";
+import ServiceDetailModal from "./modals/ServiceDetailsModal";
 import { useState } from "react";
 
 export interface iServiceCard {
@@ -8,7 +8,7 @@ export interface iServiceCard {
   image: StaticImageData;
   title: string;
   description: string;
-  detailedDescriotion: string;
+  detailedDescription: string;
   subservices: string[];
   color: "tanjerina" | "cerulean" | "carot";
   className?: string;
@@ -18,7 +18,7 @@ export default function ServiceCard({
   image,
   color,
   description,
-  detailedDescriotion,
+  detailedDescription,
   subservices,
   title,
   className,
@@ -32,14 +32,14 @@ export default function ServiceCard({
 
   const cardColors = {
     tanjerina: {
-      bgColor: "bg-orange-300",
+      bgColor: "bg-tanjerina",
       gradientColor: "from-tanjerina",
       tittleColor: `text-tanjerina`,
     },
     cerulean: {
       bgColor: "bg-cerulean",
       gradientColor: "from-cerulean",
-      tittleColor: `text-cerulean`,
+      tittleColor: `text-sky-500`,
     },
     carot: {
       bgColor: "bg-carot",
@@ -51,7 +51,7 @@ export default function ServiceCard({
     <>
       <div
         onClick={toggle}
-        className={`box-content min-w-65 min-h-50 md:min-w-62 md:min-h-45 rounded-lg overflow-hidden ${className}`}
+        className={`box-content bg- min-w-65 min-h-50 md:min-w-62 md:min-h-45 rounded-lg overflow-hidden ${className}`}
       >
         <div className="absolute w-full h-22 bottom-0 left-0 flex flex-col gap-1.5 z-2 text-white p-1.5">
           <h2
@@ -71,11 +71,12 @@ export default function ServiceCard({
           className={`absolute bottom-0 left-0 w-full h-2/5 bg-linear-to-t ${cardColors[color].gradientColor} to-transparent`}
         />
       </div>
-      <GroomingModal
+      <ServiceDetailModal
+        textColor={cardColors[color].tittleColor}
         isOpen={isOpen}
         toggle={toggle}
         title={title}
-        detailedDescription={detailedDescriotion}
+        detailedDescription={detailedDescription}
         subservices={subservices}
         bgColor={cardColors[color].bgColor}
       />

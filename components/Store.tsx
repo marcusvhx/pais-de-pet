@@ -23,7 +23,7 @@ export default function Store({}: {}) {
   ];
   return (
     <section id="store" className=" w-full h-fit">
-      <SectoinTittle tittle="Produtos" />
+      <SectoinTittle title="Produtos" />
       <div className="w-full flex justify-center">
         <div className="capitalize flex pt-5 px-2 gap-3 overflow-x-scroll scroll-hidden">
           {itemsImagesUrl.map((product, idx) => (

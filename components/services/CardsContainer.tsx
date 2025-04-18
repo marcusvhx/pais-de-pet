@@ -1,16 +1,20 @@
-import SectoinTittle from "./utils/SectionTittle";
-import { iServiceCard } from "./utils/services/ServiceCard";
+"use client";
 import vetImage from "@/public/png/services/vet-image.png";
 import petshopImage from "@/public/png/services/petshop-image.png";
 import groomingImage from "@/public/png/services/grooming-image.png";
-import CardsContainer from "./utils/services/CardsContainer";
+import { useState } from "react";
+import ServiceCard, { iServiceCard } from "./ServiceCard";
+import Carousel, { positionHandler } from "../utils/Carousel";
+import PageMarker from "./PageMarker";
+import { twMerge } from "tailwind-merge";
 
-export default function Services({}: {}) {
-  const servicesList: iServiceCard[] = [
+export default function CardsContainer() {
+  const [cardsData, setCardsData] = useState<iServiceCard[]>([
     {
       id: 0,
       title: "veterinário",
-      description: "Profissionais qualificados para o cuidado da saúde dos seus pets",
+      description:
+        "Profissionais qualificados para o cuidado da saúde dos seus pets",
       detailedDescription:
         "O serviço veterinário é centrado no cuidado completo e contínuo, com foco na prevenção de doenças e no acompanhamento de todas as fases da vida do seu pet. Queremos construir uma vida mais saudável e feliz para quem você ama. E pra isso nós oferecemos:",
       subservices: [
@@ -53,13 +57,38 @@ export default function Services({}: {}) {
       image: petshopImage,
       color: "carot",
     },
-  ];
+  ]);
+  const lastIndex = cardsData.length - 1;
+
   return (
-    <section className="py-4 flex flex-col gap-x-10" id="services">
-      <SectoinTittle title="serviços" />
-      <div className="w-full md:gap-5 flex sm:justify-around md:justify-center pt-5 px-2 overflow-x-scroll snap-mandatory snap-x snap scroll-smooth scroll-hidden">
-        <CardsContainer servicesList={servicesList} />
-      </div>
-    </section>
+    <div className="flex flex-col items-center justify-center w-full h-full overflow-hidden md:gap-5 sm:justify-around md:justify-center pt-5 px-2">
+      <Carousel<iServiceCard>
+        listWithId={cardsData}
+        setList={setCardsData}
+        className="h-55"
+      >
+        {cardsData.map((card) => (
+          <ServiceCard
+            key={`card${card.title}`}
+            className={`absolute transition-all transition-discrete duration-300 ${positionHandler(
+              card.id,
+              lastIndex
+            )}`}
+            id={card.id}
+            title={card.title}
+            description={card.description}
+            detailedDescription={card.detailedDescription}
+            subservices={card.subservices}
+            image={card.image}
+            color={card.color}
+          />
+        ))}
+      </Carousel>
+      <PageMarker
+        keyName="card"
+        selectedColor={["bg-cerulean", "bg-tanjerina", "bg-carot"]}
+        listWithId={cardsData}
+      />
+    </div>
   );
 }

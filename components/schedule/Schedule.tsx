@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
-import PetKindToggle from "./utils/schedule/PetKindToggle";
-import TextInput from "./utils/TextInput";
-import ListInput from "./utils/ListInput";
+import PetKindToggle from "./PetKindToggle";
+import TextInput from "./TextInput";
+import ListInput from "./ListInput";
 import Image from "next/image";
 import formBg from "@/public/png/backgrounds/form-bg.png";
 // lista de funcionarios e serviços
@@ -15,7 +15,9 @@ const servicesEmployeesList = [
 const servicesList = servicesEmployeesList.map((obj) => obj.service); // lista de serviços
 
 export default function Schedule({}: {}) {
-  const [employeesList, setEmployeesList] = useState(servicesEmployeesList[0].employees); // atendente selecionado
+  const [employeesList, setEmployeesList] = useState(
+    servicesEmployeesList[0].employees
+  ); // atendente selecionado
   // dados do formulario
   const [scheduleData, setScheduleData] = useState({
     clientName: "",
@@ -52,7 +54,11 @@ export default function Schedule({}: {}) {
   };
 
   const inputsDataList = [
-    { tittle: "seu nome", placeholder: "ex.: matheus silva", name: "clientName" },
+    {
+      tittle: "seu nome",
+      placeholder: "ex.: matheus silva",
+      name: "clientName",
+    },
     { tittle: "nome do pet", placeholder: "ex.: cacau", name: "petName" },
   ];
   const inputListData = [

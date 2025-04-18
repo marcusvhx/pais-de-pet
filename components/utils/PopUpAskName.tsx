@@ -26,11 +26,15 @@ export default function PopUpAskName({}: {}) {
       <h2 className="font-semibold ">Olá, poderia nos dizer o seu nome?</h2>
       <input
         onChange={(e) => getName(e.currentTarget.value)}
+        onKeyDown={(e) => e.key == "Enter" && saveName()}
         className="w-60 px-3 py-1 placeholder:normal-case rounded-full border-2 border-neutral-500 text-neutral-500"
         placeholder="Insira seu nome aqui"
       />
       <div className="flex gap-10">
-        <button onClick={closePopUp} className="text-red-400 text-base cursor-pointer">
+        <button
+          onClick={closePopUp}
+          className="text-red-400 text-base cursor-pointer"
+        >
           Agora não...
         </button>
 

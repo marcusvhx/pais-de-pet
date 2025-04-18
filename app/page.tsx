@@ -1,22 +1,30 @@
 import AboutUs from "@/components/AboutUs";
-import Employees from "@/components/Employees";
+import Contacts from "@/components/Contacts";
+import Employees from "@/components/employees/Employees";
+import Feedbacks from "@/components/feedbacks/Feedbacks";
 import Footer from "@/components/Footer";
-import Header from "@/components/Header";
+import Header from "@/components/header/Header";
 import Home from "@/components/Home";
-import Schedule from "@/components/Schedule";
-import Services from "@/components/Services";
+import Address from "@/components/Address";
+import Schedule from "@/components/schedule/Schedule";
+import Services from "@/components/services/Services";
 
 export default function SPA() {
   return (
-    <main className="">
+    <main className="scroll-smooth">
       <Header />
 
-      <div className="flex flex-col gap-18">
+      <div className="flex flex-col gap-15">
         <Home />
         {/* <Store /> */}
         <AboutUs />
         <Services />
         <Employees />
+        <Feedbacks />
+        <div>
+          <Contacts />
+          <Address />
+        </div>
         <Schedule />
       </div>
       <Footer />

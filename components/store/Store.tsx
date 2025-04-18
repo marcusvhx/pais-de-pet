@@ -1,9 +1,9 @@
 import Image, { StaticImageData } from "next/image";
-import SectoinTittle from "./utils/SectionTittle";
+import SectoinTittle from "../utils/SectionTittle";
 import product1 from "@/public/png/products/product-1.png";
 import product2 from "@/public/png/products/product-2.png";
 import product3 from "@/public/png/products/product-3.png";
-import ProductSlot from "./utils/store/ProductSlot";
+import ProductSlot from "./ProductSlot";
 
 interface iProduct {
   image: StaticImageData;

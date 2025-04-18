@@ -1,7 +1,8 @@
 "use client";
 import Image, { StaticImageData } from "next/image";
-import ServiceDetailModal from "./modals/ServiceDetailsModal";
+import ServiceDetailModal from "./ServiceDetailsModal";
 import { useState } from "react";
+import toggleWrapper from "@/functions/ToggleWrapper";
 
 export interface iServiceCard {
   id: number;
@@ -14,6 +15,23 @@ export interface iServiceCard {
   className?: string;
 }
 
+const cardColors = {
+  tanjerina: {
+    bgColor: "bg-tanjerina",
+    gradientColor: "from-tanjerina",
+    tittleColor: `text-tanjerina`,
+  },
+  cerulean: {
+    bgColor: "bg-cerulean",
+    gradientColor: "from-cerulean",
+    tittleColor: `text-sky-500`,
+  },
+  carot: {
+    bgColor: "bg-carot",
+    gradientColor: "from-carot",
+    tittleColor: `text-carot`,
+  },
+};
 export default function ServiceCard({
   image,
   color,
@@ -24,34 +42,13 @@ export default function ServiceCard({
   className,
 }: iServiceCard) {
   const [isOpen, setIsOpen] = useState(false);
-  const toggle = () => {
-    setIsOpen((old) => !old);
-    const body = document.body.style;
-    body.overflow = body.overflow == "" ? "hidden" : "";
-  };
+  const toggle = () => toggleWrapper(setIsOpen);
 
-  const cardColors = {
-    tanjerina: {
-      bgColor: "bg-tanjerina",
-      gradientColor: "from-tanjerina",
-      tittleColor: `text-tanjerina`,
-    },
-    cerulean: {
-      bgColor: "bg-cerulean",
-      gradientColor: "from-cerulean",
-      tittleColor: `text-sky-500`,
-    },
-    carot: {
-      bgColor: "bg-carot",
-      gradientColor: "from-carot",
-      tittleColor: `text-carot`,
-    },
-  };
   return (
     <>
       <div
         onClick={toggle}
-        className={`box-content bg- min-w-65 min-h-50 md:min-w-62 md:min-h-45 rounded-lg overflow-hidden ${className}`}
+        className={`box-content min-w-65 xs:min-w-70 min-h-50 md:min-w-62 md:min-h-45 rounded-lg overflow-hidden ${className}`}
       >
         <div className="absolute w-full h-22 bottom-0 left-0 flex flex-col gap-1.5 z-2 text-white p-1.5">
           <h2

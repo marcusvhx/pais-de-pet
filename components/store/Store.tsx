@@ -1,9 +1,9 @@
 import Image, { StaticImageData } from "next/image";
-import SectoinTittle from "./utils/SectionTittle";
+import SectoinTittle from "../utils/SectionTittle";
 import product1 from "@/public/png/products/product-1.png";
 import product2 from "@/public/png/products/product-2.png";
 import product3 from "@/public/png/products/product-3.png";
-import ProductSlot from "./utils/store/ProductSlot";
+import ProductSlot from "./ProductSlot";
 
 interface iProduct {
   image: StaticImageData;
@@ -23,7 +23,7 @@ export default function Store({}: {}) {
   ];
   return (
     <section id="store" className=" w-full h-fit">
-      <SectoinTittle tittle="Produtos" />
+      <SectoinTittle title="Produtos" />
       <div className="w-full flex justify-center">
         <div className="capitalize flex pt-5 px-2 gap-3 overflow-x-scroll scroll-hidden">
           {itemsImagesUrl.map((product, idx) => (

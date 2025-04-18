@@ -1,18 +1,13 @@
 import { X } from "lucide-react";
 import { iBookmark } from "./Header";
-import Wrapper from "./utils/Wrapper";
+import GenericWrapper, { iGenericWrapper } from "../utils/GenericWrapper";
 
-export default function SideBar({
-  isOpen,
-  toggle,
-  bookmarks,
-}: {
-  isOpen: boolean;
-  toggle: () => void;
+interface iSideBar extends iGenericWrapper {
   bookmarks: iBookmark[];
-}) {
+}
+export default function SideBar({ isOpen, toggle, bookmarks }: iSideBar) {
   return (
-    <Wrapper isOpen={isOpen} toggle={toggle} className="flex justify-end">
+    <GenericWrapper isOpen={isOpen} toggle={toggle} className="flex justify-end">
       <div
         className={`${
           isOpen ? "w-60" : "w-0"
@@ -25,7 +20,7 @@ export default function SideBar({
           <HeaderLink key={name} anchor={anchor} name={name} />
         ))}
       </div>
-    </Wrapper>
+    </GenericWrapper>
   );
 }
 

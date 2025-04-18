@@ -12,12 +12,12 @@ export default async function AboutUs({}: {}) {
         <br />
 
         <p className="">
-          A País de Pet é um centro de cuidados completos para animais de estimação,
+          A Pais de Pet é um centro de cuidados completos para animais de estimação,
           criado com um propósito claro: promover saúde, bem-estar e qualidade de vida
-          para os pets e tranquilidade para os seus tutores.
+          para os pets e tranquilidade aos tutores.
           <br />
           <br />
-          Nascemos da paixão pelos animais e da vontade de oferecer um atendimento mais
+          Somos fruto da paixão pelos animais e da vontade de oferecer um atendimento mais
           humano, acolhedor e focado na prevenção de doenças, indo além do tratamento
           pontual. Aqui, acreditamos que cuidar bem é agir antes que o problema apareça –
           por isso, nosso serviço veterinário tem como base o acompanhamento contínuo, com

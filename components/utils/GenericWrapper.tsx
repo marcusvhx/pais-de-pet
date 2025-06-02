@@ -17,7 +17,7 @@ export default function GenericWrapper({
     <div
       onClick={toggle}
       className={twMerge(
-        `transition-discrete transition-all bg-black/20 fixed h-dvh w-dvw md:hidden top-1/2 left-1/2 -translate-1/2 z-10 overflow-hidden ${
+        `transition-discrete transition-all bg-black/20 fixed h-dvh w-dvw top-1/2 left-1/2 -translate-1/2 z-10 overflow-hidden ${
           !isOpen && "invisible"
         }`,
         className

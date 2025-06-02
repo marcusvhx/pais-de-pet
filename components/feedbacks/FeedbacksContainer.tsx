@@ -44,11 +44,11 @@ export default function FeedbackContainer({}: {}) {
   ]);
   const lastIndex = feedbacksList.length - 1;
   return (
-    <div className="flex flex-col items-center w-full">
+    <div className="flex flex-col items-center w-full sm:w-[80dvw]">
       <Carousel<iFeedbackData>
         listWithId={feedbacksList}
         setList={setFeedbacksList}
-        className="h-95 items-center mb-2"
+        className="h-95 items-center mb-2 2xs:w-[90%] sm:w-full"
       >
         {feedbacksList.map((fb, idx) => (
           <FeedbackCard

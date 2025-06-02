@@ -30,7 +30,7 @@ export default function FeedbackCard({
   return (
     <div
       className={twMerge(
-        "w-[85dvw] p-4 rounded-xl bg-sky-250 flex flex-col items-center",
+        "max-3xs:w-[85dvw] w-85 p-4 rounded-xl bg-sky-250 flex flex-col items-center",
         className
       )}
     >

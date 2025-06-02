@@ -6,7 +6,6 @@ import { useState } from "react";
 import ServiceCard, { iServiceCard } from "./ServiceCard";
 import Carousel, { positionHandler } from "../utils/Carousel";
 import PageMarker from "./PageMarker";
-import { twMerge } from "tailwind-merge";
 
 export default function CardsContainer() {
   const [cardsData, setCardsData] = useState<iServiceCard[]>([

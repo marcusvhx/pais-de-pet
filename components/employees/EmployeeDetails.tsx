@@ -16,8 +16,10 @@ export default function EmployeeDetailsModal({
 }: iEmployeeDetailsModal) {
   return (
     <ModalWrapper isOpen={isOpen} toggle={toggle}>
-      <div className="bg-background flex flex-col items-center rounded-xl w-[90dvw] p-2 ">
-        <div className={`w-30 h-30 relative rounded-full overflow-hidden ${bgColor}`}>
+      <div className="bg-background flex flex-col items-center rounded-xl w-[90dvw] 3xs:w-90 p-2 ">
+        <div
+          className={`w-30 h-30 relative rounded-full overflow-hidden ${bgColor}`}
+        >
           <Image
             src={picture}
             alt={name + " " + profession}

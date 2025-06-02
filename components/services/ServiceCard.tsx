@@ -40,9 +40,10 @@ export default function ServiceCard({
   subservices,
   title,
   className,
+  id,
 }: iServiceCard) {
   const [isOpen, setIsOpen] = useState(false);
-  const toggle = () => toggleWrapper(setIsOpen);
+  const toggle = () => id == 0 && toggleWrapper(setIsOpen);
 
   return (
     <>

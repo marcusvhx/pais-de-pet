@@ -7,14 +7,13 @@ import Image from "next/image";
 import formBg from "@/public/png/backgrounds/form-bg.png";
 // lista de funcionarios e serviços
 
-export interface iScheduleData{
-    clientName: string,
-    petName: string,
-    selectedService: string,
-    selectedEmployee: string,
-    petKind: string,
-  
-}w
+export interface iScheduleData {
+  clientName: string;
+  petName: string;
+  selectedService: string;
+  selectedEmployee: string;
+  petKind: string;
+}
 
 const servicesEmployeesList = [
   { service: "banho e tosa", employees: ["Michele", "Nathalia"] },

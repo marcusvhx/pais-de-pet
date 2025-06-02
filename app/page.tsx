@@ -24,8 +24,8 @@ export default function SPA() {
         <div>
           <Contacts />
           <Address />
+          <Schedule />
         </div>
-        <Schedule />
       </div>
       <Footer />
     </main>

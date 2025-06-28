@@ -1,6 +1,6 @@
+import InstagramIcon from "@/public/svg/instagram";
+import WhatsappIcon from "@/public/svg/whatsapp";
 import Image from "next/image";
-import WhatsappIcon from "@/public/svg/whatsapp.svg";
-import InstagramIcon from "@/public/svg/Instagram.svg";
 
 export default function Contacts() {
   return (
@@ -14,14 +14,14 @@ export default function Contacts() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <Image src={WhatsappIcon} alt="" className="w-12 h-12" />
+          <WhatsappIcon className="size-12" />
         </a>
         <a
           href="https://www.instagram.com/paisdepetcandeias/"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <Image src={InstagramIcon} alt="" className="w-12 h-12" />
+          <InstagramIcon className="size-12" />
         </a>
       </div>
     </section>

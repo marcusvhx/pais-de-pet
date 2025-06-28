@@ -29,6 +29,7 @@
   --animate-intro-to-l: intro-to-l 0.3s ease-in-out;
 }
 
+
 @keyframes intro-opacity {
   0% {
     opacity: 0;
@@ -53,10 +54,19 @@ body {
   font-family: var(--font-fredoka);
 }
 /* ==================== custom ==================== */
-.scroll-hidden::-webkit-scrollbar {
-  display: none;
+main{
+  background-color: var(--color-background);
 }
 
-:root:has(.no-scroll) {
-  overflow: hidden;
+input{
+  outline-color: var(--color-tanjerina);
+  transition: all 0.3s ease-in-out ;
 }
+
+  body::-webkit-scrollbar {
+    width:.3rem;
+  }
+  body::-webkit-scrollbar-thumb {
+    background-color: var(--color-neutral-400);
+  }
+

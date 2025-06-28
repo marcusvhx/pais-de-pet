@@ -15,7 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <CookiesProvider>
-      <html className="scroll-pt-30 scroll-smooth scroll-hidden" lang="pt-BR">
+      <html className="scroll-pt-16 scroll-smooth" lang="pt-BR">
         <body className={``}>{children}</body>
       </html>
     </CookiesProvider>

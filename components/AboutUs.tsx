@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import Image from "next/image";
 import bgAbout from "@/public/png/backgrounds/about-us-bg.png";
+import { UsernameContext } from "@/contexts/UsernameContext";
 
 export default async function AboutUs({}: {}) {
   const pageCooies = await cookies();

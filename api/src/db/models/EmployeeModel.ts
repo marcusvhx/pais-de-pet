@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 const EmployeeSchema = new mongoose.Schema({
-    id:String,
+    id:Number,
     name:String,
     profession:String
 })

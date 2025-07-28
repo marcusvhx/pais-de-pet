@@ -2,7 +2,6 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import { connectDB } from "./db/connection";
-import { createId } from "./utils/createId";
 import { parser } from "./utils/envParser";
 import { initDB } from "./db/initDB";
 import ServiceModel from "./db/models/ServiceModel";
@@ -10,11 +9,13 @@ import EmployeeModel from "./db/models/EmployeeModel";
 import StatusModel from "./db/models/StatusModel";
 import AppointmentModel from "./db/models/AppointmentModel";
 import PetkindModel from "./db/models/PetKindModel";
+import TicketIdModel from "./db/models/TicketIdModel";
+import { createId } from "./utils/createId";
 
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 
 // middlewares
 app.use(express.json()); // parse pra JSON
@@ -26,17 +27,18 @@ app.use(
 connectDB(); // conecta a api ao mongo
 
 app.post("/scheduling", async (req, res) => {
-  const idCode = createId(); // codigo de id do trabalho
   const {
     petKindId, // id da raça do pet
-    typeId, // id do tipo de trabalho
+    serviceId, // id do trabalho
     employeeId, // id do funcionario responsavel
   } = req.body;
+
+  const idCode = await createId(petKindId); // codigo de id do trabalho
   try {
     const newWork = await AppointmentModel.create({
       id: idCode,
       petKindId,
-      workTypeId: typeId,
+      serviceId,
       employeeId,
       statusId: 1,
     });
@@ -53,14 +55,14 @@ app.get("/appointment/:id", async (req, res) => {
   try {
     const work = await AppointmentModel.findOne({ id });
     if (!work) {
-      res.status(404).json({ error: "Appointment not found" });
+      res.status(404).json({ msg: "Agendamento não encontrado" });
       return;
     }
     const employee = await EmployeeModel.findOne({ id: work.employeeId });
     const petKind = await PetkindModel.findOne({ id: work.petKindId });
     const service = await ServiceModel.findOne({ id: work.serviceId });
     const status = await StatusModel.findOne({ id: work.statusId });
-    res.json({
+    res.status(200).json({
       id: work.id,
       petKind: petKind?.name,
       service: service?.name,
@@ -99,6 +101,15 @@ app.get("/all-appointments", async (req, res) => {
   }
 });
 
+app.get("/all-employees", async (req, res) => {
+  try {
+    const employees = await EmployeeModel.find();
+    res.json(employees);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 app.delete("/all", async (req, res) => {
   try {
     await ServiceModel.deleteMany();
@@ -111,9 +122,14 @@ app.delete("/all", async (req, res) => {
   }
 });
 
-app.delete("/service/:id", async (req, res) => {
+app.delete("/appointment/:id", async (req, res) => {
   const { id } = req.params;
-  await ServiceModel.findOneAndDelete({ id });
+  const app = await AppointmentModel.findOne({ id });
+  if (!app) {
+    res.status(404).json({ msg: "Agendamento não encontrado" });
+    return;
+  }
+  await AppointmentModel.deleteOne({ id });
   res.send("deletado: " + id);
 });
 

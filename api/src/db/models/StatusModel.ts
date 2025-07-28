@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 const StatusSchema = new mongoose.Schema({
-    id:String,
+    id:Number,
     name:String
 })
 

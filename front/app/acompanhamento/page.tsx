@@ -1,10 +1,24 @@
 "use client";
+import { findGroomingByCode, iApiResponse } from "@/api/get";
+import Popup from "@/components/appointments/Popup";
 import WhatsappIcon from "@/public/icons/whatsapp";
-import findGroomingByCode from "../../api/get";
-import { useRef } from "react";
+import { LucideSearchCheck, LucideSearchX, X } from "lucide-react";
+import { redirect } from "next/navigation";
+import { useRef, useState } from "react";
 
 export default function Acompanhamento({}: {}) {
-  const codeInt = useRef<HTMLInputElement>(null);
+  const codeInp = useRef<HTMLInputElement>(null);
+  const popupMsg = useRef<HTMLInputElement>(null);
+  const [apiResponse, setApiResponse] = useState<iApiResponse>();
+
+  const searchCode = async () => {
+    if (codeInp.current) {
+      const data = await findGroomingByCode(codeInp.current.value);
+      setApiResponse(data);
+      if (popupMsg.current) popupMsg.current.textContent = data.msg;
+      redirect("acompanhamento/2");
+    }
+  };
   return (
     <main className="w-full h-dvh flex flex-col justify-center items-center gap-4">
       <div className="w-[90%]">
@@ -16,16 +30,13 @@ export default function Acompanhamento({}: {}) {
         </p>
       </div>
       <input
-        ref={codeInt}
+        ref={codeInp}
         className="w-40 h-10 px-2 border-2 border-neutral-300 rounded-md "
         placeholder="Código de acesso"
       />
 
       <button
-        onClick={() => {
-          codeInt.current && findGroomingByCode(codeInt.current.value);
-          codeInt.current && console.log(codeInt.current.value);
-        }}
+        onClick={searchCode}
         className="px-3 py-2 bg-ye bg-tanjerina hover:bg-carot rounded-md cursor-pointer text-white font-medium"
       >
         Confirmar
@@ -38,6 +49,16 @@ export default function Acompanhamento({}: {}) {
       >
         Esqueci meu código <WhatsappIcon className="size-6" />
       </a>
+      {apiResponse &&
+        (apiResponse.status == 200 ? (
+          <Popup
+            Icon={LucideSearchCheck}
+            goodNews={true}
+            msg={apiResponse.msg}
+          />
+        ) : (
+          <Popup Icon={LucideSearchX} goodNews={false} msg={apiResponse.msg} />
+        ))}
     </main>
   );
 }

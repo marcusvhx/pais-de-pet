@@ -2,39 +2,36 @@ import EmployeeModel from "./models/EmployeeModel";
 import StatusModel from "./models/StatusModel";
 import WorkTypeModel from "./models/ServiceModel";
 import PetKindModel from "./models/PetKindModel";
+import TicketIdModel from "./models/TicketIdModel";
+
+import { Model } from "mongoose";
+
+interface CheckListItem {
+  name: string;
+  model: Model<any>;
+  insert: () => Promise<void>;
+}
+
+const checkList: CheckListItem[] = [
+  { name: "funcionarios", model: EmployeeModel, insert: insertEmployees },
+  { name: "serviços", model: WorkTypeModel, insert: insertWorksTypes },
+  { name: "status", model: StatusModel, insert: insertStatuses },
+  { name: "pet", model: PetKindModel, insert: insertPetKind },
+  { name: "senha", model: TicketIdModel, insert: insertTicketId },
+];
 
 async function check() {
-  const employees = await EmployeeModel.find();
-  if (employees.length > 0) {
-    console.log("empregados ✅")
-  }else{
-    console.log("empregados ❌");
-    insertEmployees()
-  }
 
-  const worksTypes = await WorkTypeModel.find();
-  if (worksTypes.length > 0) {
-    console.log("serviços ✅")
-  }else{
-        console.log("serviços ❌")
-        insertWorksTypes()
-  }
+  checkList.forEach(async (item) => {
+    const model = await item.model.find();
+    if (model.length > 0) {
+      console.log(item.name + " ✅");
+    } else {
+      console.log(item.name + " ❌");
+      item.insert();
+    }
+})
 
-  const status = await StatusModel.find();
-  if (status.length > 0) {
-    console.log("status ✅")
-  }else{
-      console.log("status ❌")
-      insertStatuses()
-  }
-
-  const petKind = await PetKindModel.find();
-  if (petKind.length > 0) {
-    console.log("raça do pet ✅")
-  }else{
-      console.log("raça do pet ❌")
-      insertPetKind()
-  }
 }
 
 async function insertEmployees() {
@@ -76,6 +73,10 @@ async function insertPetKind() {
   console.log("raças adicionadas ✅");
 }
 
+async function insertTicketId() {
+  await TicketIdModel.create({ number: 1 });
+  console.log("senha criada ✅");
+}
 function initDB() {
   check();
 }

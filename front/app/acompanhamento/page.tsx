@@ -6,17 +6,27 @@ import { LucideSearchCheck, LucideSearchX, X } from "lucide-react";
 import { redirect } from "next/navigation";
 import { useRef, useState } from "react";
 
+interface ErrorPopup {
+  isError: boolean;
+  msg: string;
+}
+
 export default function Acompanhamento({}: {}) {
   const codeInp = useRef<HTMLInputElement>(null);
-  const popupMsg = useRef<HTMLInputElement>(null);
-  const [apiResponse, setApiResponse] = useState<iApiResponse>();
+  const [errorMsg, setErrorMsg] = useState<ErrorPopup>();
 
   const searchCode = async () => {
     if (codeInp.current) {
-      const data = await findGroomingByCode(codeInp.current.value);
-      setApiResponse(data);
-      if (popupMsg.current) popupMsg.current.textContent = data.msg;
-      redirect("acompanhamento/2");
+      const { data, status, msg } = await findGroomingByCode(
+        codeInp.current.value
+      );
+
+      if (status === 200) return redirect(`acompanhamento/${data?.id}`);
+
+      setErrorMsg({
+        isError: true,
+        msg: msg,
+      });
     }
   };
   return (
@@ -49,16 +59,9 @@ export default function Acompanhamento({}: {}) {
       >
         Esqueci meu código <WhatsappIcon className="size-6" />
       </a>
-      {apiResponse &&
-        (apiResponse.status == 200 ? (
-          <Popup
-            Icon={LucideSearchCheck}
-            goodNews={true}
-            msg={apiResponse.msg}
-          />
-        ) : (
-          <Popup Icon={LucideSearchX} goodNews={false} msg={apiResponse.msg} />
-        ))}
+      {errorMsg && (
+        <Popup Icon={LucideSearchX} goodNews={false} msg={errorMsg.msg} />
+      )}
     </main>
   );
 }

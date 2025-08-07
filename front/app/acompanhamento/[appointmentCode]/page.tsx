@@ -7,15 +7,7 @@ export default async function groomingSteps({
 }) {
   const { appointmentCode } = await params;
   const groomingData = await findGroomingByCode(appointmentCode);
-  if (groomingData?.data) {
-    const keys = Object.keys(groomingData.data);
+  console.log(groomingData);
 
-    return (
-      <>
-        {keys.map((key) => (
-          <p key={key}>{`${key}: ${groomingData.data[key]}`}</p>
-        ))}
-      </>
-    );
-  }
+  return <></>;
 }

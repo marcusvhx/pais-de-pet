@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   icons: "/favicon/logo-pais-de-pet.ico",
 };
 
-export default function RootLayout({
+export default function AppointmentLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

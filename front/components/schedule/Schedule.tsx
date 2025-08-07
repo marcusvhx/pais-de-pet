@@ -18,7 +18,10 @@ export interface iScheduleData {
 }
 
 const servicesEmployeesList = [
-  { service: "banho e tosa", employees: ["Michele", "Nathalia"] },
+  {
+    service: "banho e tosa",
+    employees: ["Não tenho preferência", "Michele", "Nathalia"],
+  },
   { service: "consulta vetérinária", employees: ["dr. Rafael"] },
   { service: "vacinação", employees: ["dr. Rafael"] },
 ];

@@ -4,13 +4,12 @@ import dotenv from "dotenv";
 import { connectDB } from "./db/connection";
 import { parser } from "./utils/envParser";
 import { initDB } from "./db/initDB";
+
+import { Appointment } from "./models/Appointment";
+import PathModel from "./db/models/PathModel";
 import ServiceModel from "./db/models/ServiceModel";
-import EmployeeModel from "./db/models/EmployeeModel";
-import StatusModel from "./db/models/StatusModel";
-import AppointmentModel from "./db/models/AppointmentModel";
-import PetkindModel from "./db/models/PetKindModel";
-import TicketIdModel from "./db/models/TicketIdModel";
-import { createId } from "./utils/createId";
+import { Employee } from "./models/Employee";
+import { Path } from "./models/Path";
 
 dotenv.config();
 
@@ -26,111 +25,158 @@ app.use(
 );
 connectDB(); // conecta a api ao mongo
 
+const appointment = new Appointment();
+const employee = new Employee();
+
 app.post("/scheduling", async (req, res) => {
   const {
     petKindId, // id da raça do pet
     serviceId, // id do trabalho
     employeeId, // id do funcionario responsavel
+    steps, // etapas do trabalho
+  }: {
+    petKindId: 1 | 2;
+    serviceId: number;
+    employeeId: number;
+    steps: string[];
   } = req.body;
 
-  const idCode = await createId(petKindId); // codigo de id do trabalho
+  if (petKindId > 2 || petKindId < 1) {
+    res.status(400).json({ msg: "Id da raça inválida" });
+    return;
+  }
   try {
-    const newWork = await AppointmentModel.create({
-      id: idCode,
+    const newAppointment = await appointment.create({
+      employeeId,
       petKindId,
       serviceId,
-      employeeId,
-      statusId: 1,
+      steps,
     });
 
-    res.json(newWork);
-  } catch (error) {
-    console.log("erro ao cria trabalho");
-    console.log(error);
+    res.json(newAppointment);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ msg: "Erro ao criar agendamento" });
+  }
+});
+
+app.post("/step", async (req, res) => {
+  const { name }: { name: string } = req.body;
+  try {
+    const newStep = await new Path().createStep(name);
+
+    res.json(newStep);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ msg: "Erro ao criar agendamento" });
+  }
+});
+
+app.put("/next-step/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const path = await new Path().nextStep(Number(id));
+
+    if (!path) {
+      res.status(404).json({ msg: "etapas não encontradas" });
+      return;
+    }
+
+    res.json(path);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ msg: "Erro ao avançar etapa" });
+  }
+});
+
+app.get("/path/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const path = await PathModel.findOne({ id });
+
+    if (!path) {
+      res.status(404).json({ msg: "etapas não encontrado" });
+      return;
+    }
+
+    res.json(path);
+  } catch (err) {
+    res.status(500).json({ msg: "Erro ao buscar etapas" });
   }
 });
 
 app.get("/appointment/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    const work = await AppointmentModel.findOne({ id });
-    if (!work) {
-      res.status(404).json({ msg: "Agendamento não encontrado" });
-      return;
-    }
-    const employee = await EmployeeModel.findOne({ id: work.employeeId });
-    const petKind = await PetkindModel.findOne({ id: work.petKindId });
-    const service = await ServiceModel.findOne({ id: work.serviceId });
-    const status = await StatusModel.findOne({ id: work.statusId });
-    res.status(200).json({
-      id: work.id,
-      petKind: petKind?.name,
-      service: service?.name,
-      employee: employee?.name,
-      status: status?.name,
-    });
+    res.json(await appointment.getById(id));
   } catch (err) {
     console.log(err);
+    res.status(500).json({ msg: "Erro ao buscar agendamento" });
   }
 });
 
-app.get("/all-services", async (req, res) => {
+app.get("/all-services", async (_, res) => {
   try {
-    const works = await ServiceModel.find();
-    res.json(works);
+    const services = await ServiceModel.find();
+    res.json(services);
   } catch (err) {
     console.log(err);
+    res.status(500).json({ msg: "Erro ao buscar serviços" });
   }
 });
 
-app.get("/all-status", async (req, res) => {
+app.get("/all-path", async (_, res) => {
   try {
-    const status = await StatusModel.find();
-    res.json(status);
+    const steps = await PathModel.find();
+    res.json(steps);
   } catch (err) {
     console.log(err);
+    res.status(500).json({ msg: "Erro ao buscar as etapas dos serviços" });
   }
 });
 
-app.get("/all-appointments", async (req, res) => {
+app.get("/all-appointments", async (_, res) => {
   try {
-    const appointments = await AppointmentModel.find();
+    const appointments = await appointment.getAll();
     res.json(appointments);
   } catch (err) {
     console.log(err);
+    res.status(500).json({ msg: "Erro ao buscar agendamentos" });
   }
 });
 
-app.get("/all-employees", async (req, res) => {
+app.get("/all-employees", async (_, res) => {
   try {
-    const employees = await EmployeeModel.find();
+    const employees = await new Employee().getAll();
     res.json(employees);
   } catch (err) {
     console.log(err);
+    res.status(500).json({ msg: "Erro ao buscar funcionários" });
   }
 });
 
 app.delete("/all", async (req, res) => {
   try {
     await ServiceModel.deleteMany();
-    await AppointmentModel.deleteMany();
-    await EmployeeModel.deleteMany();
-    await StatusModel.deleteMany();
+    await appointment.deleteAll();
+    await employee.deleteAll();
+    await PathModel.deleteMany();
     res.send("deletado");
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ msg: "Erro ao deletar tudo" });
   }
 });
 
 app.delete("/appointment/:id", async (req, res) => {
   const { id } = req.params;
-  const app = await AppointmentModel.findOne({ id });
-  if (!app) {
-    res.status(404).json({ msg: "Agendamento não encontrado" });
-    return;
+  try {
+    await appointment.deleteById(id);
+    res.send("deletado: " + id);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ msg: "Erro ao deletar agendamento" });
   }
-  await AppointmentModel.deleteOne({ id });
-  res.send("deletado: " + id);
 });
 
 initDB();

@@ -1,9 +1,11 @@
 import axios, { AxiosError, AxiosResponse, isAxiosError } from "axios";
+
 export interface iApiResponse {
   status: number;
   msg: string;
   data?: iGroomingResponse;
 }
+
 export interface iGroomingResponse {
   id: string;
   petKind: string;
@@ -11,6 +13,7 @@ export interface iGroomingResponse {
   employee: string;
   status: string;
 }
+
 export async function findGroomingByCode(code: string) {
   try {
     const { data, status }: { data: iGroomingResponse; status: number } =

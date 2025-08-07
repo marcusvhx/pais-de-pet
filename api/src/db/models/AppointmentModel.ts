@@ -4,7 +4,7 @@ const AppoinmentSchema = new mongoose.Schema({
     petKindId:Number,
     serviceId:Number,
     employeeId:Number,
-    statusId:Number,
+    pathId:Number
 })
 
 export default mongoose.model("Appointment", AppoinmentSchema);

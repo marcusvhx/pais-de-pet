@@ -1,8 +1,8 @@
 "use client";
-import { findGroomingByCode, iApiResponse } from "@/api/get";
+import { getAppointment, iAppointment } from "@/api/get";
 import Popup from "@/components/appointments/Popup";
 import WhatsappIcon from "@/public/icons/whatsapp";
-import { LucideSearchCheck, LucideSearchX, X } from "lucide-react";
+import { LucideSearchX, X } from "lucide-react";
 import { redirect } from "next/navigation";
 import { useRef, useState } from "react";
 
@@ -14,19 +14,18 @@ interface ErrorPopup {
 export default function Acompanhamento({}: {}) {
   const codeInp = useRef<HTMLInputElement>(null);
   const [errorMsg, setErrorMsg] = useState<ErrorPopup>();
-
   const searchCode = async () => {
     if (codeInp.current) {
-      const { data, status, msg } = await findGroomingByCode(
-        codeInp.current.value
-      );
+      const { data, status, msg } = await getAppointment(codeInp.current.value);
 
-      if (status === 200) return redirect(`acompanhamento/${data?.id}`);
-
-      setErrorMsg({
-        isError: true,
-        msg: msg,
-      });
+      if (status > 200 && msg) {
+        setErrorMsg({
+          isError: true,
+          msg,
+        });
+        return;
+      }
+      redirect(`acompanhamento/${data?.id}`);
     }
   };
   return (
@@ -40,6 +39,7 @@ export default function Acompanhamento({}: {}) {
         </p>
       </div>
       <input
+        onKeyDown={(e) => e.key === "Enter" && searchCode()}
         ref={codeInp}
         className="w-40 h-10 px-2 border-2 border-neutral-300 rounded-md "
         placeholder="Código de acesso"

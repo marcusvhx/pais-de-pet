@@ -26,6 +26,7 @@ export class Ticket {
   async resetTickets() {
     try {
       await TicketModel.findOneAndUpdate({}, { $set: { number: 0 } });
+      console.log("ticket resetado")
     } catch (err) {
       console.error(err);
       throw new Error("Error ao reiniciar Tickets");

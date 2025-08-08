@@ -3,6 +3,16 @@ import StepModel from "../db/models/StepModel";
 import { Ticket } from "./Ticket";
 
 export class Path {
+  async getAll() {
+    try {
+      const paths = await PathModel.find();
+      return paths;
+    } catch (err) {
+      console.error("Erro ao buscar todos os paths");
+      throw err;
+    }
+  }
+
   async create(steps: string[]) {
     try {
       const path = await PathModel.create({
@@ -72,6 +82,16 @@ export class Path {
     } catch (err) {
       console.error("Erro ao pausar/despausar path");
       throw err;
+    }
+  }
+
+  async deleteAll(){
+    try{
+
+      await PathModel.deleteMany()
+    }catch(err){
+      console.error("Erro ao deletar path")
+      throw err
     }
   }
 }

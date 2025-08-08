@@ -1,0 +1,380 @@
+[1mdiff --git a/api/src/models/Appointment.ts b/api/src/models/Appointment.ts[m
+[1mindex 8f971dc..48dc958 100644[m
+[1m--- a/api/src/models/Appointment.ts[m
+[1m+++ b/api/src/models/Appointment.ts[m
+[36m@@ -6,14 +6,13 @@[m [mimport ServiceModel from "../db/models/ServiceModel";[m
+ import { Path } from "./Path";[m
+ import { Ticket } from "./Ticket";[m
+ [m
+[31m-const ticket = new Ticket()[m
+[32m+[m[32mconst ticket = new Ticket();[m
+ [m
+ export class Appointment {[m
+[31m-[m
+   async createAppointmentId(petKindId: 1 | 2) {[m
+[31m-    const suff = await ticket.getTicket();[m
+[32m+[m[32m    const suffix = await ticket.getTicket();[m
+     const prefix = petKindId == 1 ? "G" : "C";[m
+[31m-    return prefix + String(suff).padStart(3, "0");[m
+[32m+[m[32m    return prefix + String(suffix).padStart(3, "0");[m
+   }[m
+ [m
+   async create({[m
+[36m@@ -43,7 +42,7 @@[m [mexport class Appointment {[m
+ [m
+   async getById(id: string) {[m
+     try {[m
+[31m-      const appointment = await AppointmentModel.findOne({ id: id });[m
+[32m+[m[32m      const appointment = await AppointmentModel.findOne({ id });[m
+ [m
+       if (!appointment) {[m
+         throw Error("Agendamento não encontrado");[m
+[36m@@ -54,7 +53,6 @@[m [mexport class Appointment {[m
+       });[m
+       const petKind = await PetKindModel.findOne({ id: appointment.petKindId });[m
+       const service = await ServiceModel.findOne({ id: appointment.serviceId });[m
+[31m-[m
+       if (!employee || !petKind || !service) {[m
+         console.log("employee:", employee);[m
+         console.log("petKind:", petKind);[m
+[36m@@ -66,6 +64,14 @@[m [mexport class Appointment {[m
+ [m
+       if (!path) throw Error("Etapas não encontradas");[m
+ [m
+[32m+[m[32m      console.log({[m
+[32m+[m[32m        appointment,[m
+[32m+[m[32m        employee,[m
+[32m+[m[32m        petKind,[m
+[32m+[m[32m        service,[m
+[32m+[m[32m        path,[m
+[32m+[m[32m      });[m
+[32m+[m
+       return {[m
+         id: appointment.id,[m
+         petKind: petKind.specie,[m
+[36m@@ -80,7 +86,16 @@[m [mexport class Appointment {[m
+   }[m
+ [m
+   async getAll() {[m
+[31m-    return await AppointmentModel.find();[m
+[32m+[m[32m    try {[m
+[32m+[m[32m      const appointments = await AppointmentModel.find();[m
+[32m+[m[32m      if (!appointments || appointments.length === 0) {[m
+[32m+[m[32m        throw new Error("Nenhum agendamento encontrado");[m
+[32m+[m[32m      }[m
+[32m+[m[32m      return await AppointmentModel.find();[m
+[32m+[m[32m    } catch (err) {[m
+[32m+[m[32m      console.error("Erro ao buscar todos os agendamentos");[m
+[32m+[m[32m      throw err;[m
+[32m+[m[32m    }[m
+   }[m
+ [m
+   async updateById([m
+[36m@@ -96,7 +111,7 @@[m [mexport class Appointment {[m
+   }[m
+ [m
+   async deleteById(id: string) {[m
+[31m-    return await AppointmentModel.findOneAndDelete({id});[m
+[32m+[m[32m    return await AppointmentModel.findOneAndDelete({ id });[m
+   }[m
+ [m
+   async deleteAll() {[m
+[1mdiff --git a/api/src/models/Path.ts b/api/src/models/Path.ts[m
+[1mindex 071f583..964ccab 100644[m
+[1m--- a/api/src/models/Path.ts[m
+[1m+++ b/api/src/models/Path.ts[m
+[36m@@ -3,6 +3,16 @@[m [mimport StepModel from "../db/models/StepModel";[m
+ import { Ticket } from "./Ticket";[m
+ [m
+ export class Path {[m
+[32m+[m[32m  async getAll() {[m
+[32m+[m[32m    try {[m
+[32m+[m[32m      const paths = await PathModel.find();[m
+[32m+[m[32m      return paths;[m
+[32m+[m[32m    } catch (err) {[m
+[32m+[m[32m      console.error("Erro ao buscar todos os paths");[m
+[32m+[m[32m      throw err;[m
+[32m+[m[32m    }[m
+[32m+[m[32m  }[m
+[32m+[m
+   async create(steps: string[]) {[m
+     try {[m
+       const path = await PathModel.create({[m
+[36m@@ -74,4 +84,14 @@[m [mexport class Path {[m
+       throw err;[m
+     }[m
+   }[m
+[32m+[m
+[32m+[m[32m  async deleteAll(){[m
+[32m+[m[32m    try{[m
+[32m+[m
+[32m+[m[32m      await PathModel.deleteMany()[m
+[32m+[m[32m    }catch(err){[m
+[32m+[m[32m      console.error("Erro ao deletar path")[m
+[32m+[m[32m      throw err[m
+[32m+[m[32m    }[m
+[32m+[m[32m  }[m
+ }[m
+[1mdiff --git a/api/src/models/Ticket.ts b/api/src/models/Ticket.ts[m
+[1mindex 1634e26..d659930 100644[m
+[1m--- a/api/src/models/Ticket.ts[m
+[1m+++ b/api/src/models/Ticket.ts[m
+[36m@@ -26,6 +26,7 @@[m [mexport class Ticket {[m
+   async resetTickets() {[m
+     try {[m
+       await TicketModel.findOneAndUpdate({}, { $set: { number: 0 } });[m
+[32m+[m[32m      console.log("ticket resetado")[m
+     } catch (err) {[m
+       console.error(err);[m
+       throw new Error("Error ao reiniciar Tickets");[m
+[1mdiff --git a/api/src/server.ts b/api/src/server.ts[m
+[1mindex 1d773b0..ff2a099 100644[m
+[1m--- a/api/src/server.ts[m
+[1m+++ b/api/src/server.ts[m
+[36m@@ -6,11 +6,14 @@[m [mimport { parser } from "./utils/envParser";[m
+ import { initDB } from "./db/initDB";[m
+ [m
+ import { Appointment } from "./models/Appointment";[m
+[31m-import PathModel from "./db/models/PathModel";[m
+[31m-import ServiceModel from "./db/models/ServiceModel";[m
+ import { Employee } from "./models/Employee";[m
+ import { Path } from "./models/Path";[m
+ [m
+[32m+[m[32mimport ServiceModel from "./db/models/ServiceModel";[m
+[32m+[m[32mimport PetKindModel from "./db/models/PetKindModel";[m
+[32m+[m[32mimport StepModel from "./db/models/StepModel";[m
+[32m+[m[32mimport { Ticket } from "./models/Ticket";[m
+[32m+[m
+ dotenv.config();[m
+ [m
+ const app = express();[m
+[36m@@ -27,6 +30,8 @@[m [mconnectDB(); // conecta a api ao mongo[m
+ [m
+ const appointment = new Appointment();[m
+ const employee = new Employee();[m
+[32m+[m[32mconst path = new Path();[m
+[32m+[m[32mconst ticket = new Ticket()[m
+ [m
+ app.post("/scheduling", async (req, res) => {[m
+   const {[m
+[36m@@ -92,14 +97,14 @@[m [mapp.put("/next-step/:id", async (req, res) => {[m
+ app.get("/path/:id", async (req, res) => {[m
+   const { id } = req.params;[m
+   try {[m
+[31m-    const path = await PathModel.findOne({ id });[m
+[32m+[m[32m    const wantedPath = await path.getById(Number(id));[m
+ [m
+[31m-    if (!path) {[m
+[32m+[m[32m    if (!wantedPath) {[m
+       res.status(404).json({ msg: "etapas não encontrado" });[m
+       return;[m
+     }[m
+ [m
+[31m-    res.json(path);[m
+[32m+[m[32m    res.json(wantedPath);[m
+   } catch (err) {[m
+     res.status(500).json({ msg: "Erro ao buscar etapas" });[m
+   }[m
+[36m@@ -127,7 +132,7 @@[m [mapp.get("/all-services", async (_, res) => {[m
+ [m
+ app.get("/all-path", async (_, res) => {[m
+   try {[m
+[31m-    const steps = await PathModel.find();[m
+[32m+[m[32m    const steps = await path.getAll();[m
+     res.json(steps);[m
+   } catch (err) {[m
+     console.log(err);[m
+[36m@@ -155,12 +160,15 @@[m [mapp.get("/all-employees", async (_, res) => {[m
+   }[m
+ });[m
+ [m
+[31m-app.delete("/all", async (req, res) => {[m
+[32m+[m[32mapp.delete("/all", async (_, res) => {[m
+   try {[m
+[31m-    await ServiceModel.deleteMany();[m
+     await appointment.deleteAll();[m
+     await employee.deleteAll();[m
+[31m-    await PathModel.deleteMany();[m
+[32m+[m[32m    await path.deleteAll();[m
+[32m+[m[32m    await PetKindModel.deleteMany()[m
+[32m+[m[32m    await ServiceModel.deleteMany();[m
+[32m+[m[32m    await StepModel.deleteMany();[m
+[32m+[m[32m    await ticket.resetTickets()[m
+     res.send("deletado");[m
+   } catch (err) {[m
+     console.log(err);[m
+[1mdiff --git a/front/api/get.ts b/front/api/get.ts[m
+[1mindex dba3f37..948de06 100644[m
+[1m--- a/front/api/get.ts[m
+[1m+++ b/front/api/get.ts[m
+[36m@@ -2,41 +2,45 @@[m [mimport axios, { AxiosError, AxiosResponse, isAxiosError } from "axios";[m
+ [m
+ export interface iApiResponse {[m
+   status: number;[m
+[31m-  msg: string;[m
+[31m-  data?: iGroomingResponse;[m
+[32m+[m[32m  msg?: string;[m
+[32m+[m[32m  data?: iAppointment;[m
+ }[m
+ [m
+[31m-export interface iGroomingResponse {[m
+[32m+[m[32mexport interface iPath {[m
+[32m+[m[32m  id: number;[m
+[32m+[m[32m  paused: boolean;[m
+[32m+[m[32m  currentPosition: number;[m
+[32m+[m[32m  steps: string[];[m
+[32m+[m[32m}[m
+[32m+[m[32mexport interface iAppointment {[m
+   id: string;[m
+   petKind: string;[m
+   service: string;[m
+   employee: string;[m
+[31m-  status: string;[m
+[32m+[m[32m  path: iPath;[m
+ }[m
+ [m
+[31m-export async function findGroomingByCode(code: string) {[m
+[32m+[m[32mexport async function getAppointment(code: string) {[m
+   try {[m
+[31m-    const { data, status }: { data: iGroomingResponse; status: number } =[m
+[31m-      await axios(`${process.env.NEXT_PUBLIC_API_URL}/appointment/${code}`);[m
+[32m+[m[32m    const {[m
+[32m+[m[32m      data,[m
+[32m+[m[32m      status,[m
+[32m+[m[32m    }: { data: iAppointment; status: number} = await axios([m
+[32m+[m[32m      `${process.env.NEXT_PUBLIC_API_URL}/appointment/${code}`[m
+[32m+[m[32m    );[m
+[32m+[m
+     const response: iApiResponse = {[m
+       data,[m
+[31m-      msg: "busca bem sucedida",[m
+       status,[m
+     };[m
+     return response;[m
+[31m-[m
+[31m-    [m
+   } catch (err) {[m
+[31m-    const error = err as AxiosError;[m
+[32m+[m[32m    const { message, status } = err as AxiosError;[m
+ [m
+     const errorResponse: iApiResponse = {[m
+[31m-      msg: "código invalido",[m
+[31m-      status: error.status || 500,[m
+[32m+[m[32m      msg: message,[m
+[32m+[m[32m      status: status || 500,[m
+     };[m
+[31m-    if (error.status != 404) {[m
+[31m-      errorResponse.msg =[m
+[31m-        "ocorreu um erro inesperado, fale conosco no whatsapp";[m
+[31m-    }[m
+ [m
+     return errorResponse;[m
+   }[m
+[1mdiff --git a/front/app/acompanhamento/[appointmentCode]/layout.tsx b/front/app/acompanhamento/[appointmentCode]/layout.tsx[m
+[1mdeleted file mode 100644[m
+[1mindex 839f209..0000000[m
+[1m--- a/front/app/acompanhamento/[appointmentCode]/layout.tsx[m
+[1m+++ /dev/null[m
+[36m@@ -1,23 +0,0 @@[m
+[31m-import type { Metadata } from "next";[m
+[31m-import "../../globals.css";[m
+[31m-import { CookiesProvider } from "next-client-cookies/server";[m
+[31m-[m
+[31m-export const metadata: Metadata = {[m
+[31m-  title: "Pais De Pet",[m
+[31m-  description: "Petshop em Candeias",[m
+[31m-  icons: "/favicon/logo-pais-de-pet.ico",[m
+[31m-};[m
+[31m-[m
+[31m-export default function AppointmentLayout({[m
+[31m-  children,[m
+[31m-}: Readonly<{[m
+[31m-  children: React.ReactNode;[m
+[31m-}>) {[m
+[31m-  return ([m
+[31m-    <CookiesProvider>[m
+[31m-      <html className="scroll-pt-16 scroll-smooth" lang="pt-BR">[m
+[31m-        <body className={``}>{children}</body>[m
+[31m-      </html>[m
+[31m-    </CookiesProvider>[m
+[31m-  );[m
+[31m-}[m
+[1mdiff --git a/front/app/acompanhamento/[appointmentCode]/page.tsx b/front/app/acompanhamento/[appointmentCode]/page.tsx[m
+[1mindex 9c7cfb4..6e1945b 100644[m
+[1m--- a/front/app/acompanhamento/[appointmentCode]/page.tsx[m
+[1m+++ b/front/app/acompanhamento/[appointmentCode]/page.tsx[m
+[36m@@ -1,13 +1,7 @@[m
+[31m-import { findGroomingByCode } from "@/api/get";[m
+[31m-[m
+[31m-export default async function groomingSteps({[m
+[31m-  params,[m
+[31m-}: {[m
+[31m-  params: Promise<{ appointmentCode: string }>;[m
+[31m-}) {[m
+[31m-  const { appointmentCode } = await params;[m
+[31m-  const groomingData = await findGroomingByCode(appointmentCode);[m
+[31m-  console.log(groomingData);[m
+[31m-[m
+[31m-  return <></>;[m
+[32m+[m[32mexport default function groomingSteps({}: {}) {[m
+[32m+[m[32m  return ([m
+[32m+[m[32m    <main className="w-full h-dvh flex flex-col justify-center items-center gap-4 bg-linear-180 from-cerulean to-30% to-white ">[m
+[32m+[m[32m      teste[m
+[32m+[m[32m    </main>[m
+[32m+[m[32m  );[m
+ }[m
+[1mdiff --git a/front/app/acompanhamento/page.tsx b/front/app/acompanhamento/page.tsx[m
+[1mindex 067571e..8f61403 100644[m
+[1m--- a/front/app/acompanhamento/page.tsx[m
+[1m+++ b/front/app/acompanhamento/page.tsx[m
+[36m@@ -1,8 +1,8 @@[m
+ "use client";[m
+[31m-import { findGroomingByCode, iApiResponse } from "@/api/get";[m
+[32m+[m[32mimport { getAppointment, iAppointment } from "@/api/get";[m
+ import Popup from "@/components/appointments/Popup";[m
+ import WhatsappIcon from "@/public/icons/whatsapp";[m
+[31m-import { LucideSearchCheck, LucideSearchX, X } from "lucide-react";[m
+[32m+[m[32mimport { LucideSearchX, X } from "lucide-react";[m
+ import { redirect } from "next/navigation";[m
+ import { useRef, useState } from "react";[m
+ [m
+[36m@@ -14,19 +14,18 @@[m [minterface ErrorPopup {[m
+ export default function Acompanhamento({}: {}) {[m
+   const codeInp = useRef<HTMLInputElement>(null);[m
+   const [errorMsg, setErrorMsg] = useState<ErrorPopup>();[m
+[31m-[m
+   const searchCode = async () => {[m
+     if (codeInp.current) {[m
+[31m-      const { data, status, msg } = await findGroomingByCode([m
+[31m-        codeInp.current.value[m
+[31m-      );[m
+[31m-[m
+[31m-      if (status === 200) return redirect(`acompanhamento/${data?.id}`);[m
+[32m+[m[32m      const { data, status, msg } = await getAppointment(codeInp.current.value);[m
+ [m
+[31m-      setErrorMsg({[m
+[31m-        isError: true,[m
+[31m-        msg: msg,[m
+[31m-      });[m
+[32m+[m[32m      if (status > 200 && msg) {[m
+[32m+[m[32m        setErrorMsg({[m
+[32m+[m[32m          isError: true,[m
+[32m+[m[32m          msg,[m
+[32m+[m[32m        });[m
+[32m+[m[32m        return;[m
+[32m+[m[32m      }[m
+[32m+[m[32m      redirect(`acompanhamento/${data?.id}`);[m
+     }[m
+   };[m
+   return ([m
+[36m@@ -40,6 +39,7 @@[m [mexport default function Acompanhamento({}: {}) {[m
+         </p>[m
+       </div>[m
+       <input[m
+[32m+[m[32m        onKeyDown={(e) => e.key === "Enter" && searchCode()}[m
+         ref={codeInp}[m
+         className="w-40 h-10 px-2 border-2 border-neutral-300 rounded-md "[m
+         placeholder="Código de acesso"[m
+[1mdiff --git a/front/contexts/appointmentContext.tsx b/front/contexts/appointmentContext.tsx[m
+[1mdeleted file mode 100644[m
+[1mindex e69de29..0000000[m

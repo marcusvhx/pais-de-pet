@@ -6,10 +6,13 @@ import { parser } from "./utils/envParser";
 import { initDB } from "./db/initDB";
 
 import { Appointment } from "./models/Appointment";
-import PathModel from "./db/models/PathModel";
-import ServiceModel from "./db/models/ServiceModel";
 import { Employee } from "./models/Employee";
 import { Path } from "./models/Path";
+
+import ServiceModel from "./db/models/ServiceModel";
+import PetKindModel from "./db/models/PetKindModel";
+import StepModel from "./db/models/StepModel";
+import { Ticket } from "./models/Ticket";
 
 dotenv.config();
 
@@ -27,6 +30,8 @@ connectDB(); // conecta a api ao mongo
 
 const appointment = new Appointment();
 const employee = new Employee();
+const path = new Path();
+const ticket = new Ticket()
 
 app.post("/scheduling", async (req, res) => {
   const {
@@ -92,14 +97,14 @@ app.put("/next-step/:id", async (req, res) => {
 app.get("/path/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    const path = await PathModel.findOne({ id });
+    const wantedPath = await path.getById(Number(id));
 
-    if (!path) {
+    if (!wantedPath) {
       res.status(404).json({ msg: "etapas não encontrado" });
       return;
     }
 
-    res.json(path);
+    res.json(wantedPath);
   } catch (err) {
     res.status(500).json({ msg: "Erro ao buscar etapas" });
   }
@@ -127,7 +132,7 @@ app.get("/all-services", async (_, res) => {
 
 app.get("/all-path", async (_, res) => {
   try {
-    const steps = await PathModel.find();
+    const steps = await path.getAll();
     res.json(steps);
   } catch (err) {
     console.log(err);
@@ -155,12 +160,15 @@ app.get("/all-employees", async (_, res) => {
   }
 });
 
-app.delete("/all", async (req, res) => {
+app.delete("/all", async (_, res) => {
   try {
-    await ServiceModel.deleteMany();
     await appointment.deleteAll();
     await employee.deleteAll();
-    await PathModel.deleteMany();
+    await path.deleteAll();
+    await PetKindModel.deleteMany()
+    await ServiceModel.deleteMany();
+    await StepModel.deleteMany();
+    await ticket.resetTickets()
     res.send("deletado");
   } catch (err) {
     console.log(err);

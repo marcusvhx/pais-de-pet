@@ -2,41 +2,45 @@ import axios, { AxiosError, AxiosResponse, isAxiosError } from "axios";
 
 export interface iApiResponse {
   status: number;
-  msg: string;
-  data?: iGroomingResponse;
+  msg?: string;
+  data?: iAppointment;
 }
 
-export interface iGroomingResponse {
+export interface iPath {
+  id: number;
+  paused: boolean;
+  currentPosition: number;
+  steps: string[];
+}
+export interface iAppointment {
   id: string;
   petKind: string;
   service: string;
   employee: string;
-  status: string;
+  path: iPath;
 }
 
-export async function findGroomingByCode(code: string) {
+export async function getAppointment(code: string) {
   try {
-    const { data, status }: { data: iGroomingResponse; status: number } =
-      await axios(`${process.env.NEXT_PUBLIC_API_URL}/appointment/${code}`);
+    const {
+      data,
+      status,
+    }: { data: iAppointment; status: number} = await axios(
+      `${process.env.NEXT_PUBLIC_API_URL}/appointment/${code}`
+    );
+
     const response: iApiResponse = {
       data,
-      msg: "busca bem sucedida",
       status,
     };
     return response;
-
-    
   } catch (err) {
-    const error = err as AxiosError;
+    const { message, status } = err as AxiosError;
 
     const errorResponse: iApiResponse = {
-      msg: "código invalido",
-      status: error.status || 500,
+      msg: message,
+      status: status || 500,
     };
-    if (error.status != 404) {
-      errorResponse.msg =
-        "ocorreu um erro inesperado, fale conosco no whatsapp";
-    }
 
     return errorResponse;
   }

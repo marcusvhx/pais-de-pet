@@ -6,14 +6,13 @@ import ServiceModel from "../db/models/ServiceModel";
 import { Path } from "./Path";
 import { Ticket } from "./Ticket";
 
-const ticket = new Ticket()
+const ticket = new Ticket();
 
 export class Appointment {
-
   async createAppointmentId(petKindId: 1 | 2) {
-    const suff = await ticket.getTicket();
+    const suffix = await ticket.getTicket();
     const prefix = petKindId == 1 ? "G" : "C";
-    return prefix + String(suff).padStart(3, "0");
+    return prefix + String(suffix).padStart(3, "0");
   }
 
   async create({
@@ -43,7 +42,7 @@ export class Appointment {
 
   async getById(id: string) {
     try {
-      const appointment = await AppointmentModel.findOne({ id: id });
+      const appointment = await AppointmentModel.findOne({ id });
 
       if (!appointment) {
         throw Error("Agendamento não encontrado");
@@ -54,7 +53,6 @@ export class Appointment {
       });
       const petKind = await PetKindModel.findOne({ id: appointment.petKindId });
       const service = await ServiceModel.findOne({ id: appointment.serviceId });
-
       if (!employee || !petKind || !service) {
         console.log("employee:", employee);
         console.log("petKind:", petKind);
@@ -65,6 +63,14 @@ export class Appointment {
       const path = await PathModel.findOne({ id: appointment.pathId });
 
       if (!path) throw Error("Etapas não encontradas");
+
+      console.log({
+        appointment,
+        employee,
+        petKind,
+        service,
+        path,
+      });
 
       return {
         id: appointment.id,
@@ -80,7 +86,16 @@ export class Appointment {
   }
 
   async getAll() {
-    return await AppointmentModel.find();
+    try {
+      const appointments = await AppointmentModel.find();
+      if (!appointments || appointments.length === 0) {
+        throw new Error("Nenhum agendamento encontrado");
+      }
+      return await AppointmentModel.find();
+    } catch (err) {
+      console.error("Erro ao buscar todos os agendamentos");
+      throw err;
+    }
   }
 
   async updateById(
@@ -96,7 +111,7 @@ export class Appointment {
   }
 
   async deleteById(id: string) {
-    return await AppointmentModel.findOneAndDelete({id});
+    return await AppointmentModel.findOneAndDelete({ id });
   }
 
   async deleteAll() {

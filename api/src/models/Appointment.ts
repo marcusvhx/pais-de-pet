@@ -3,6 +3,7 @@ import EmployeeModel from "../db/models/EmployeeModel";
 import PathModel from "../db/models/PathModel";
 import PetKindModel from "../db/models/PetKindModel";
 import ServiceModel from "../db/models/ServiceModel";
+import { ErrorWithStatus } from "../utils/ErrorWithStatus";
 import { Path } from "./Path";
 import { Ticket } from "./Ticket";
 
@@ -41,11 +42,9 @@ export class Appointment {
   }
 
   async getById(id: string) {
-    try {
       const appointment = await AppointmentModel.findOne({ id });
-
       if (!appointment) {
-        throw Error("Agendamento não encontrado");
+        throw new ErrorWithStatus("Agendamento não encontrado", 404);
       }
 
       const employee = await EmployeeModel.findOne({
@@ -57,20 +56,12 @@ export class Appointment {
         console.log("employee:", employee);
         console.log("petKind:", petKind);
         console.log("service:", service);
-        throw Error("Dados não encontrados");
+        throw new ErrorWithStatus("Dados não encontrados", 404);
       }
 
       const path = await PathModel.findOne({ id: appointment.pathId });
 
-      if (!path) throw Error("Etapas não encontradas");
-
-      console.log({
-        appointment,
-        employee,
-        petKind,
-        service,
-        path,
-      });
+      if (!path) throw new ErrorWithStatus("Etapas não encontradas", 404);
 
       return {
         id: appointment.id,
@@ -79,10 +70,6 @@ export class Appointment {
         employee: employee.name,
         path,
       };
-    } catch (err) {
-      console.error("Erro ao buscar agendamento");
-      throw err;
-    }
   }
 
   async getAll() {

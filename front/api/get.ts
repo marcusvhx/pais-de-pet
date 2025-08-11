@@ -22,12 +22,8 @@ export interface iAppointment {
 
 export async function getAppointment(code: string) {
   try {
-    const {
-      data,
-      status,
-    }: { data: iAppointment; status: number} = await axios(
-      `${process.env.NEXT_PUBLIC_API_URL}/appointment/${code}`
-    );
+    const { data, status }: { data: iAppointment; status: number } =
+      await axios(`${process.env.NEXT_PUBLIC_API_URL}/appointment/${code}`);
 
     const response: iApiResponse = {
       data,
@@ -35,10 +31,10 @@ export async function getAppointment(code: string) {
     };
     return response;
   } catch (err) {
-    const { message, status } = err as AxiosError;
-
+    //@ts-ignore
+    const { data, status } = err.response;
     const errorResponse: iApiResponse = {
-      msg: message,
+      msg: data,
       status: status || 500,
     };
 

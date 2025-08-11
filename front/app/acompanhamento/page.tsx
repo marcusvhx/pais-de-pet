@@ -2,7 +2,7 @@
 import { getAppointment, iAppointment } from "@/api/get";
 import Popup from "@/components/appointments/Popup";
 import WhatsappIcon from "@/public/icons/whatsapp";
-import { LucideSearchX, X } from "lucide-react";
+import { LucideSearchX } from "lucide-react";
 import { redirect } from "next/navigation";
 import { useRef, useState } from "react";
 
@@ -16,13 +16,19 @@ export default function Acompanhamento({}: {}) {
   const [errorMsg, setErrorMsg] = useState<ErrorPopup>();
   const searchCode = async () => {
     if (codeInp.current) {
-      const { data, status, msg } = await getAppointment(codeInp.current.value);
+      const code = codeInp.current.value.toUpperCase();
+      const { data, status, msg } = await getAppointment(code);
 
       if (status > 200 && msg) {
         setErrorMsg({
           isError: true,
           msg,
         });
+
+        setTimeout(() => {
+          setErrorMsg({ isError: false, msg: "" });
+          codeInp.current?.focus();
+        }, 5500);
         return;
       }
       redirect(`acompanhamento/${data?.id}`);
@@ -39,15 +45,16 @@ export default function Acompanhamento({}: {}) {
         </p>
       </div>
       <input
-        onKeyDown={(e) => e.key === "Enter" && searchCode()}
+        onKeyDown={(e) => e.key == "Enter" && searchCode()}
         ref={codeInp}
-        className="w-40 h-10 px-2 border-2 border-neutral-300 rounded-md "
+        required
+        className="w-40 h-10 px-2 border-2 border-neutral-300 rounded-md uppercase"
         placeholder="Código de acesso"
       />
 
       <button
         onClick={searchCode}
-        className="px-3 py-2 bg-ye bg-tanjerina hover:bg-carot rounded-md cursor-pointer text-white font-medium"
+        className="px-3 py-2 bg-tanjerina hover:bg-carot rounded-md cursor-pointer text-white font-medium"
       >
         Confirmar
       </button>
@@ -59,8 +66,13 @@ export default function Acompanhamento({}: {}) {
       >
         Esqueci meu código <WhatsappIcon className="size-6" />
       </a>
-      {errorMsg && (
-        <Popup Icon={LucideSearchX} goodNews={false} msg={errorMsg.msg} />
+      {errorMsg?.isError && (
+        <Popup
+          className="animate-[popup-animation_5s_ease-in-out_linear] transition-all"
+          Icon={LucideSearchX}
+          goodNews={false}
+          msg={errorMsg.msg}
+        />
       )}
     </main>
   );

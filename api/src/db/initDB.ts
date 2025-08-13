@@ -1,10 +1,10 @@
-import EmployeeModel from "./models/EmployeeModel";
-import ServiceModel from "./models/ServiceModel";
-import PetKindModel from "./models/PetKindModel";
-import TicketIdModel from "./models/TicketModel";
+import EmployeeModel from "../models/EmployeeModel";
+import ServiceModel from "../models/ServiceModel";
+import PetKindModel from "../models/PetKindModel";
+import TicketIdModel from "../models/TicketModel";
 
 import { Model } from "mongoose";
-import StepModel from "./models/StepModel";
+import StepModel from "../models/StepModel";
 
 interface CheckListItem {
   name: string;

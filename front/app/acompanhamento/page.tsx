@@ -13,10 +13,23 @@ interface ErrorPopup {
 
 export default function Acompanhamento({}: {}) {
   const codeInp = useRef<HTMLInputElement>(null);
-  const [errorMsg, setErrorMsg] = useState<ErrorPopup>();
+  const [errorMsg, setErrorMsg] = useState<ErrorPopup>({
+    isError: false,
+    msg: "",
+  });
   const searchCode = async () => {
     if (codeInp.current) {
+      // o valor padão é null, o ts precisa
       const code = codeInp.current.value.toUpperCase();
+      if (code.length != 4) {
+        setErrorMsg({
+          isError: true,
+          msg: "O código deve ter 4 caracteres",
+        });
+        codeInp.current?.focus();
+        return;
+      }
+      codeInp.current.disabled = true;
       const { data, status, msg } = await getAppointment(code);
 
       if (status > 200 && msg) {
@@ -26,9 +39,10 @@ export default function Acompanhamento({}: {}) {
         });
 
         setTimeout(() => {
-          setErrorMsg({ isError: false, msg: "" });
-          codeInp.current?.focus();
+          setErrorMsg((old) => ({ ...old, isError: false }));
         }, 5500);
+        codeInp.current.disabled = false;
+        codeInp.current?.focus();
         return;
       }
       redirect(`acompanhamento/${data?.id}`);
@@ -48,7 +62,7 @@ export default function Acompanhamento({}: {}) {
         onKeyDown={(e) => e.key == "Enter" && searchCode()}
         ref={codeInp}
         required
-        className="w-40 h-10 px-2 border-2 border-neutral-300 rounded-md uppercase"
+        className="w-40 h-10 px-2 border-2 border-neutral-300 rounded-md disabled:opacity-50 placeholder:first-letter:uppercase not-placeholder-shown:uppercase"
         placeholder="Código de acesso"
       />
 
@@ -66,14 +80,13 @@ export default function Acompanhamento({}: {}) {
       >
         Esqueci meu código <WhatsappIcon className="size-6" />
       </a>
-      {errorMsg?.isError && (
-        <Popup
-          className="animate-[popup-animation_5s_ease-in-out_linear] transition-all"
-          Icon={LucideSearchX}
-          goodNews={false}
-          msg={errorMsg.msg}
-        />
-      )}
+      <Popup
+        isVisible={errorMsg.isError}
+        className="transition-all"
+        Icon={LucideSearchX}
+        goodNews={false}
+        msg={errorMsg.msg}
+      />
     </main>
   );
 }

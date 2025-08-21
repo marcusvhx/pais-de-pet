@@ -72,7 +72,7 @@ export class AppointmentController {
         id: apt.id,
         petKind: petKind.specie,
         service: service.name,
-        employee: employee.name,
+        employee: { name: employee.name, id: employee.id },
         path,
       });
     } catch (err) {

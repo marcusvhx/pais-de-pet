@@ -1,28 +1,32 @@
 import { NextFunction, Request, Response } from "express";
 import { ErrorWithStatus } from "../utils/ErrorWithStatus";
-import ServiceModel from "../models/ServiceModel";
+import PetKindModel from "../models/PetKindModel";
 
-export class ServicesController {
+export class PetKindController {
   static async create(req: Request, res: Response, next: NextFunction) {
-    const { name, employeesIds } = req.body;
+    const { specie, kind } = req.body;
     try {
-      const lastService = await ServiceModel.findOne().sort({ id: -1 });
-      const id = lastService ? lastService.id + 1 : 1;
-      const newServices = await ServiceModel.create({ id, name, employeesIds });
+      const lastKind = await PetKindModel.findOne().sort({ id: -1 });
+      const id = lastKind ? lastKind.id + 1 : 1;
+      const newKind = await PetKindModel.create({ id, specie, kind });
 
-      res.status(201).json(newServices);
+      res.status(201).json(newKind);
     } catch (err) {
       next(err);
     }
   }
-  
+
   static async edit(req: Request, res: Response, next: NextFunction) {
-    const { name, employeesIds } = req.body;
+    const { specie, kind } = req.body;
     const { id } = req.params;
     try {
-      const editedService = await ServiceModel.updateOne({ id }, { name, employeesIds },{new:true});
+      const editedKind = await PetKindModel.updateOne(
+        { id },
+        { specie, kind },
+        { new: true }
+      );
 
-      res.status(200).json(editedService);
+      res.status(200).json(editedKind);
     } catch (err) {
       next(err);
     }
@@ -30,8 +34,8 @@ export class ServicesController {
 
   static async getAll(_: Request, res: Response, next: NextFunction) {
     try {
-      const services = await ServiceModel.find();
-      res.json(services);
+      const kinds = await PetKindModel.find();
+      res.json(kinds);
     } catch (err) {
       next(err);
     }
@@ -40,11 +44,11 @@ export class ServicesController {
   static async getById(req: Request, res: Response, next: NextFunction) {
     const { id } = req.params;
     try {
-      const service = await ServiceModel.findOne({ id });
-      if (!service) {
+      const kind = await PetKindModel.findOne({ id });
+      if (!kind) {
         throw new ErrorWithStatus("serviços não encontrado", 404);
       }
-      res.json(service);
+      res.json(kind);
     } catch (err) {
       next(err);
     }
@@ -53,8 +57,8 @@ export class ServicesController {
   static async deleteById(req: Request, res: Response, next: NextFunction) {
     const { id } = req.params;
     try {
-      await ServiceModel.findOneAndDelete({ id });
-      res.json({ msg: "serviço deletado" });
+      await PetKindModel.findOneAndDelete({ id });
+      res.status(204).json({ msg: "raça deletada" });
     } catch (err) {
       next(err);
     }

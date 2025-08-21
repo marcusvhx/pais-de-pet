@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import express, { NextFunction, Request, Response } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import { connectDB } from "./db/connection";
@@ -15,23 +15,27 @@ const PORT = process.env.PORT;
 // middlewares
 app.use(express.json()); // parse pra JSON
 app.use(
+  // cors do front
   cors({
     origin: parser(process.env.CORS_ORIGIN || ""),
   })
 );
 
-connectDB(); // conecta a api ao mongo
-initDB();
+setupRoutes(app); // configura as rotas
 
-setupRoutes(app);
 
-app.use((err: ErrorWithStatus | Error, req: Request, res: Response) => {
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+  // middleware de error
   if (err instanceof ErrorWithStatus) {
     res.status(err.statusCode).send(err.message);
     return;
   }
   res.status(500).send("Erro interno do servidor");
 });
+
+connectDB(); // conecta a api ao mongo
+initDB(); // verifica se o db ta certo
+
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

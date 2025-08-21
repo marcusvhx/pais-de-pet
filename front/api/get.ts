@@ -23,7 +23,8 @@ export interface iAppointment {
 export async function getAppointment(code: string) {
   try {
     const { data, status }: { data: iAppointment; status: number } =
-      await axios(`${process.env.NEXT_PUBLIC_API_URL}/appointment/${code}`);
+      await axios(`${process.env.NEXT_PUBLIC_API_URL}/appointments/${code}`);
+    console.log(data, status);
 
     const response: iApiResponse = {
       data,
@@ -31,6 +32,7 @@ export async function getAppointment(code: string) {
     };
     return response;
   } catch (err) {
+    console.log(err);
     //@ts-ignore
     const { data, status } = err.response;
     const errorResponse: iApiResponse = {

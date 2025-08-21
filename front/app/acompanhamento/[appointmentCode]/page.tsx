@@ -1,9 +1,71 @@
 import Image from "next/image";
 import catImage from "@/public/images/appointments/IMG-gato.svg";
-export default function groomingSteps({}: {}) {
+import { getAppointment } from "@/api/get";
+import { redirect } from "next/navigation";
+
+export default async function groomingSteps({
+  params,
+}: {
+  params: Promise<{ appointmentCode: string }>;
+}) {
+  const code = (await params).appointmentCode;
+  const appointment = await getAppointment(code);
+  if (appointment.status > 200) {
+    redirect("/acompanhamento");
+  }
+
   return (
     <main className="w-full h-dvh p-4 flex flex-col items-center gap-4 bg-linear-180 from-cerulean to-30% to-white ">
-      <Image src={catImage} alt="gato" className="w-full h-[20dvh] " />
+      <div className="">
+        <Image src={catImage} alt="gato" className="w-full h-[25dvh] " />
+        <p className="text-sm text-center">
+          estamos preparando seu pet para você! Acompanhe o processo por aqui,
+          te avisaremos pelo whatsapp quanto acabar
+        </p>
+      </div>
+      <div className="self-start">
+        <h2 className="text-lg font-medium">Etapas</h2>
+        <div className="bg-linear-90 from-tanjerina via-yellow to-white to-30% h-1 w-30 rounded-full"></div>
+      </div>
+
+      <div className=" w-[90dvw] h-1/2 overflow-scroll flex flex-col items-start p-4 gap-4">
+        {appointment.data &&
+          appointment.data.path.steps.map((step, idx) => (
+            // container das etapas
+            <div
+              data-first={idx == 0}
+              key={`step${idx}`}
+              className={`data-[first=false]:mt-[26px] flex justify-around items-center gap-x-2`}
+            >
+              {/* container do caminho */}
+              <div className="w-6 flex justify-center">
+                {/* bola */}
+                <div
+                  data-first={idx == 0}
+                  data-done={
+                    (appointment.data?.path.currentPosition ?? -1) >= idx
+                  }
+                  data-current={
+                    (appointment.data?.path.currentPosition ?? -1) == idx
+                  }
+                  className="relative data-[first=true]:z-1 size-2 data-[current=true]:size-3 data-[done=true]:bg-tanjerina bg-[#fed699] rounded-full"
+                >
+                  {/* linha */}
+                  {idx > 0 && (
+                    <div
+                      data-done={
+                        (appointment.data?.path.currentPosition ?? -1) >= idx
+                      }
+                      className={`absolute bottom-[95%] left-1/2 -translate-x-1/2 h-15 w-1 data-[done=true]:bg-tanjerina bg-[#fed699] `}
+                    />
+                  )}
+                </div>
+              </div>
+              {/* texto */}
+              <p>{step}</p>
+            </div>
+          ))}
+      </div>
     </main>
   );
 }

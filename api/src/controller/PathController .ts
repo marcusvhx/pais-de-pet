@@ -9,7 +9,7 @@ export class PathController {
     const { steps } = req.body;
     try {
       const newPath = await Path.create(steps);
-      res.status(201).json({ msg: "path criado" });
+      res.status(201).json(newPath);
     } catch (err) {
       next(err);
     }
@@ -36,22 +36,21 @@ export class PathController {
     }
   }
 
-
   static async nextStep(req: Request, res: Response, next: NextFunction) {
     const { id } = req.params;
     try {
       await Path.nextStep(Number(id));
-      res.status(200).json({msg:"etapa avançado"});
+      res.status(200).json({ msg: "etapa avançado" });
     } catch (err) {
       next(err);
     }
   }
-  
+
   static async pause(req: Request, res: Response, next: NextFunction) {
     const { id } = req.params;
     try {
       await Path.togglePause(Number(id));
-      res.status(200).json({msg:"pausado"});
+      res.status(200).json({ msg: "pausado" });
     } catch (err) {
       next(err);
     }

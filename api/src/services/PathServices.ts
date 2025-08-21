@@ -1,9 +1,14 @@
 import PathModel from "../models/PathModel";
 import TicketModel from "../models/TicketModel";
+import { ErrorWithStatus } from "../utils/ErrorWithStatus";
 
 export class Path {
   static async create(steps: string[]) {
-    const ticket = await TicketModel.findOne()
+    const ticket = await TicketModel.findOne();
+    if (!ticket) {
+      throw new ErrorWithStatus("ticket não existe", 400);
+    }
+    
     const path = await PathModel.create({
       id: ticket.number,
       paused: false,
@@ -31,5 +36,4 @@ export class Path {
     );
     return { msg: "operação bem sucedida", paused: path?.paused };
   }
-
 }

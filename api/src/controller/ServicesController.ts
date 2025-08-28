@@ -20,7 +20,7 @@ export class ServicesController {
     const { name, employeesIds } = req.body;
     const { id } = req.params;
     try {
-      const editedService = await ServiceModel.updateOne({ id }, { name, employeesIds },{new:true});
+      const editedService = await ServiceModel.findOneAndUpdate({ id }, { name, employeesIds }, { new: true });
 
       res.status(200).json(editedService);
     } catch (err) {

@@ -20,7 +20,7 @@ export class PetKindController {
     const { specie, kind } = req.body;
     const { id } = req.params;
     try {
-      const editedKind = await PetKindModel.updateOne(
+      const editedKind = await PetKindModel.findOneAndUpdate(
         { id },
         { specie, kind },
         { new: true }

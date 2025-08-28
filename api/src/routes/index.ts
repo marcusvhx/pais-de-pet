@@ -1,9 +1,9 @@
 import { Express } from "express";
-import { appointmentRouter } from "./appointmentRoutes";
 import { employeeRouter } from "./employeeRoutes";
 import { pathRouter } from "./pathRoutes";
 import { servicesRouter } from "./servicesRoutes";
 import { petKindRouter } from "./petKindRoutes";
+import { appointmentRouter } from "./AppointmentRoutes";
 
 export function setupRoutes(app: Express) {
   app.use("/appointments", appointmentRouter);

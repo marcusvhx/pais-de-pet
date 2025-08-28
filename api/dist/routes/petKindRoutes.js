@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.petKindRouter = void 0;
+const express_1 = require("express");
+const PetKindController_1 = require("../controller/PetKindController");
+const petKindRouter = (0, express_1.Router)();
+exports.petKindRouter = petKindRouter;
+petKindRouter.post("/", PetKindController_1.PetKindController.create);
+petKindRouter.get("/:id", PetKindController_1.PetKindController.getById);
+petKindRouter.get("/all", PetKindController_1.PetKindController.getAll);
+petKindRouter.put("/:id", PetKindController_1.PetKindController.edit);
+petKindRouter.delete("/:id", PetKindController_1.PetKindController.deleteById);

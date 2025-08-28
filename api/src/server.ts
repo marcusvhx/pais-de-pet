@@ -9,7 +9,7 @@ import { setupRoutes } from "./routes";
 
 dotenv.config();
 
-const app = express();
+export const app = express();
 const PORT = process.env.PORT;
 
 // middlewares

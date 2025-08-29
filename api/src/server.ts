@@ -5,7 +5,7 @@ import { connectDB } from "./db/connection";
 import { parser } from "./utils/envParser";
 import { initDB } from "./db/initDB";
 import { ErrorWithStatus } from "./utils/ErrorWithStatus";
-import { setupRoutes } from "./routes";
+import setupRoutes from "./routes";
 
 dotenv.config();
 

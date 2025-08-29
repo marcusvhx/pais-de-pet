@@ -6,7 +6,7 @@ import { petKindRouter } from "./petKindRoutes";
 import { appointmentRouter } from "./AppointmentRoutes";
 import { hello } from "./hello";
 
-export function setupRoutes(app: Express) {
+export default function setupRoutes(app: Express) {
   app.use("/", hello);
   app.use("/appointments", appointmentRouter);
   app.use("/employees", employeeRouter);

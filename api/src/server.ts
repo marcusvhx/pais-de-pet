@@ -9,7 +9,7 @@ import { setupRoutes } from "./routes";
 
 dotenv.config();
 
-export const app = express();
+const app = express();
 const PORT = process.env.PORT;
 
 // middlewares
@@ -40,3 +40,5 @@ initDB(); // verifica se o db ta certo
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
+export default app;

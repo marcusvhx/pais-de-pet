@@ -8,7 +8,7 @@ servicesRouter.post("/", ServicesController.create)
 
 servicesRouter.get("/:id", ServicesController.getById)
 
-servicesRouter.get("/all", ServicesController.getAll)
+servicesRouter.get("/", ServicesController.getAll)
 
 servicesRouter.put("/:id", ServicesController.edit)
 

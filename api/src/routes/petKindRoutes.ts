@@ -7,7 +7,7 @@ petKindRouter.post("/", PetKindController.create);
 
 petKindRouter.get("/:id", PetKindController.getById);
 
-petKindRouter.get("/all", PetKindController.getAll);
+petKindRouter.get("/", PetKindController.getAll);
 
 petKindRouter.put("/:id", PetKindController.edit);
 

@@ -8,7 +8,7 @@ employeeRouter.post("/", EmployeeController.create)
 
 employeeRouter.get("/:id", EmployeeController.getById)
 
-employeeRouter.get("/all", EmployeeController.getAll)
+employeeRouter.get("/", EmployeeController.getAll)
 
 employeeRouter.put("/:id", EmployeeController.edit)
 

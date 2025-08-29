@@ -8,7 +8,7 @@ pathRouter.post("/", PathController.create)
 
 pathRouter.get("/:id", PathController.getById)
 
-pathRouter.get("/all", PathController.getSteps)
+pathRouter.get("/", PathController.getSteps)
 
 pathRouter.put("/next", PathController.nextStep)
 

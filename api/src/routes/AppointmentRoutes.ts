@@ -6,9 +6,9 @@ const appointmentRouter = Router();
 
 appointmentRouter.post("/", AppointmentController.schedule)
 
-appointmentRouter.get("/:id", AppointmentController.getById)
+appointmentRouter.get("/", AppointmentController.getAll)
 
-appointmentRouter.get("/all", AppointmentController.getAll)
+appointmentRouter.get("/:id", AppointmentController.getById)
 
 appointmentRouter.put("/:id", AppointmentController.edit)
 

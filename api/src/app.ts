@@ -37,8 +37,8 @@ connectDB(); // conecta a api ao mongo
 initDB(); // verifica se o db ta certo
 
 
-// app.listen(PORT, () => {
-//   console.log(`Server is running on port ${PORT}`);
-// });
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
 
 export default app;

@@ -1,14 +1,17 @@
-FROM node:18 AS build
+FROM node:22 AS build
+
 WORKDIR /app
 
 COPY package.json ./
-RUN npm install
 
 COPY tsconfig.json ./
+
 COPY src ./src
 
-RUN npx tsc --outDir dist
+RUN npm i
+
+RUN npx tsc
 
 EXPOSE 4000
 
-CMD ["node", "dist/server.js"]
+CMD ["node", "dist/src/server.js"]

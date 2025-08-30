@@ -10,8 +10,7 @@ COPY src ./src
 
 RUN npm i
 
-RUN npx tsc
+RUN npx tsc --outDir ./dist
 
 EXPOSE 4000
-
 CMD ["node", "dist/src/server.js"]

@@ -10,14 +10,14 @@ import setupRoutes from "./routes";
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT;
+const PORT = 4000;
 
 // middlewares
 app.use(express.json()); // parse pra JSON
 app.use(
   // cors do front
   cors({
-    origin: parser(process.env.CORS_ORIGIN || ""),
+    origin: parser(process.env.NEXT_PUBLIC_CORS_ORIGIN || ""),
   })
 );
 
@@ -37,8 +37,8 @@ connectDB(); // conecta a api ao mongo
 initDB(); // verifica se o db ta certo
 
 
-// app.listen(PORT, () => {
-//   console.log(`Server is running on port ${PORT}`);
-// });
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
 
 export default app;

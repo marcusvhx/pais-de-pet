@@ -10,9 +10,9 @@ pathRouter.get("/:id", PathController.getById)
 
 pathRouter.get("/", PathController.getSteps)
 
-pathRouter.put("/next", PathController.nextStep)
+pathRouter.put("/next/:id", PathController.nextStep)
 
-pathRouter.put("/pause", PathController.pause)
+pathRouter.put("/pause/:id", PathController.pause)
 
 pathRouter.delete("/:id", PathController.deleteById)
 

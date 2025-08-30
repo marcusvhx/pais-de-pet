@@ -75,7 +75,7 @@ export default async function groomingSteps({
         <div className="overflow-hidden size-35 bg-tanjerina rounded-full">
           <Image
             className="w-full "
-            src={employeesImages[appointment.data?.employee.id || 0]}
+            src={employeesImages[appointment.data?.employee.id - 1 || 0]}
             alt={`funcionário`}
           />
         </div>
